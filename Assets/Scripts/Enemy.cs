@@ -25,6 +25,8 @@ public class Enemy : LivingEntity
 
     bool hasTarget;
 
+    public float ignoreTargetDistance = 10.0f;
+
     protected override void Start()
     {
         base.Start();
@@ -116,7 +118,7 @@ public class Enemy : LivingEntity
 
         while (hasTarget)
         {
-            if (currentState == State.Chasing)
+            if (currentState == State.Chasing && (target.position-transform.position).magnitude < ignoreTargetDistance)
             {
                 Vector3 dirToTarget = (target.position - transform.position).normalized;
                 Vector3 targetPosition = target.position - dirToTarget * (myCollisionRadius + targetCollisionRadius + attackDistanceThreshold / 2);

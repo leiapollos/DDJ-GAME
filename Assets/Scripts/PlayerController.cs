@@ -27,6 +27,6 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         myRigidbody.MovePosition(myRigidbody.position + velocity * Time.fixedDeltaTime);
-
+        Camera.main.transform.position += velocity * Time.fixedDeltaTime;
     }
 }
