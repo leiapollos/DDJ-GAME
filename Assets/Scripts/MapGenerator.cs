@@ -34,6 +34,7 @@ public class MapGenerator : MonoBehaviour
     {
         currentMap = maps[mapIndex];
         tileMap = new Transform[currentMap.mapSize.x, currentMap.mapSize.y];
+        Debug.Log(currentMap.mapSize.x);
         System.Random prng = new System.Random(currentMap.seed);
         GetComponent<BoxCollider>().size = new Vector3(currentMap.mapSize.x * tileSize, .05f, currentMap.mapSize.y * tileSize);
 
