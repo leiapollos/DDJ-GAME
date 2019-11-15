@@ -2,7 +2,7 @@
 using System.Collections;
 
 [RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
-public class Enemy : LivingEntity
+public class Enemy2 : LivingEntity
 {
 
     public enum State { Idle, Chasing, Attacking };
@@ -27,8 +27,11 @@ public class Enemy : LivingEntity
 
     public float ignoreTargetDistance = 10.0f;
 
+    float lastTime = 0;
+
     protected override void Start()
     {
+        lastTime = Time.time;
         base.Start();
         pathfinder = GetComponent<UnityEngine.AI.NavMeshAgent>();
         skinMaterial = GetComponent<Renderer>().material;
@@ -47,6 +50,7 @@ public class Enemy : LivingEntity
             targetCollisionRadius = target.GetComponent<CapsuleCollider>().radius;
 
             StartCoroutine(UpdatePath());
+
         }
     }
 
@@ -114,11 +118,11 @@ public class Enemy : LivingEntity
 
     IEnumerator UpdatePath()
     {
-        float refreshRate = .25f;
 
+        float refreshRate = .25f;
         while (hasTarget)
         {
-            if (currentState == State.Chasing && (target.position-transform.position).magnitude < ignoreTargetDistance)
+            if (currentState == State.Chasing && (target.position - transform.position).magnitude < ignoreTargetDistance)
             {
                 Vector3 dirToTarget = (target.position - transform.position).normalized;
                 Vector3 targetPosition = target.position - dirToTarget * (myCollisionRadius + targetCollisionRadius + attackDistanceThreshold / 2);
@@ -127,8 +131,21 @@ public class Enemy : LivingEntity
                     pathfinder.SetDestination(targetPosition);
                 }
             }
+            else if(Time.time - lastTime > 2)
+            {
+                float x = Random.Range(-15, 15);
+                float z = Random.Range(-15, 15);
+                Vector3 tpos = new Vector3(x, 0, z);
+                Vector3 dirToTarget = (tpos - transform.position).normalized;
+                Debug.Log(tpos);
+                Vector3 targetPosition = tpos - dirToTarget / 2;
+                if (!dead)
+                {
+                    pathfinder.SetDestination(targetPosition);
+                }
+                lastTime = Time.time;
+            }
             yield return new WaitForSeconds(refreshRate);
         }
-
     }
 }
