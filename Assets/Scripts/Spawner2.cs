@@ -44,12 +44,11 @@ public class Spawner2 : MonoBehaviour
             }
             lastTime = Time.time;
         }
-        foreach (Enemy2 zombie in currentZombies)
+        for (int i = 0; i < currentZombies.Count; i++)
         {
-            if (zombie == null)
-                currentZombies.Remove(zombie);
-        }
-            
+            if (currentZombies[i] == null)
+                currentZombies.RemoveAt(i);
+        }            
     }
 
 }

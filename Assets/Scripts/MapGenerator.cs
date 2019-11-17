@@ -112,7 +112,7 @@ public class MapGenerator : MonoBehaviour
         shuffledOpenTileCoords = new Queue<Coord>(Utility.ShuffleArray(allOpenCoords.ToArray(), currentMap.seed));
 
         // Creating navmesh mask
-        Transform maskLeft = Instantiate(navmeshMaskPrefab, Vector3.left * (currentMap.mapSize.x + maxMapSize.x) / 4f * tileSize, Quaternion.identity) as Transform;
+       /* Transform maskLeft = Instantiate(navmeshMaskPrefab, Vector3.left * (currentMap.mapSize.x + maxMapSize.x) / 4f * tileSize, Quaternion.identity) as Transform;
         maskLeft.parent = mapHolder;
         maskLeft.localScale = new Vector3((maxMapSize.x - currentMap.mapSize.x) / 2f, 1, currentMap.mapSize.y) * tileSize;
 
@@ -128,7 +128,7 @@ public class MapGenerator : MonoBehaviour
         maskBottom.parent = mapHolder;
         maskBottom.localScale = new Vector3(maxMapSize.x, 1, (maxMapSize.y - currentMap.mapSize.y) / 2f) * tileSize;
 
-        navmeshFloor.localScale = new Vector3(maxMapSize.x, maxMapSize.y) * tileSize;
+        navmeshFloor.localScale = new Vector3(maxMapSize.x, maxMapSize.y) * tileSize;*/
 
     }
 
