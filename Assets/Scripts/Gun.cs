@@ -9,7 +9,7 @@ public class Gun : MonoBehaviour
     public float msBetweenShots = 100;
     public float muzzleVelocity = 35;
 
-    float nextShotTime;
+    protected float nextShotTime;
 
     public void Shoot()
     {

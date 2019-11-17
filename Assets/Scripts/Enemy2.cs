@@ -12,6 +12,7 @@ public class Enemy2 : LivingEntity
     Transform target;
     LivingEntity targetEntity;
     Material skinMaterial;
+    Animator animator;
 
     Color originalColour;
 
@@ -35,6 +36,7 @@ public class Enemy2 : LivingEntity
         base.Start();
         pathfinder = GetComponent<UnityEngine.AI.NavMeshAgent>();
         skinMaterial = GetComponent<Renderer>().material;
+        animator = GetComponent<Animator>();
         originalColour = skinMaterial.color;
 
         if (GameObject.FindGameObjectWithTag("Player") != null)
@@ -76,6 +78,8 @@ public class Enemy2 : LivingEntity
 
             }
         }
+
+        updateAnimation();
 
     }
 
@@ -147,5 +151,12 @@ public class Enemy2 : LivingEntity
             }
             yield return new WaitForSeconds(refreshRate);
         }
+    }
+
+    void updateAnimation()
+    {
+        animator.SetBool("Walking", currentState == State.Chasing ? true : false);
+        animator.SetBool("Idle", currentState == State.Idle ? true : false);
+        animator.SetBool("Attacking", currentState == State.Attacking ? true : false);
     }
 }
