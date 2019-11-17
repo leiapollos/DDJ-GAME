@@ -291,6 +291,7 @@ GameObject:
   - component: {fileID: -4901780277513801761}
   - component: {fileID: -5212805669607909657}
   - component: {fileID: -2598400796388073507}
+  - component: {fileID: 190028037277714813}
   m_Layer: 8
   m_Name: CartoonyBusinessZombie
   m_TagString: Untagged
@@ -324,7 +325,7 @@ Animator:
   m_GameObject: {fileID: 100018}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 0dc5e69150e35074f960d9750a6b00c2, type: 3}
-  m_Controller: {fileID: 9100000, guid: 258544e233f655d40928fe74557ccc6b, type: 2}
+  m_Controller: {fileID: 9100000, guid: da76fbc45556d1b4f8ea0e58794e3676, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -368,6 +369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 5
+  ignoreTargetDistance: 10
 --- !u!23 &-5212805669607909657
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -419,6 +421,20 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &190028037277714813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40a0bffce8ec0fb4595e09b7092ad506, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 3
+  ignoreTargetDistance: 5
 --- !u!1 &100020
 GameObject:
   m_ObjectHideFlags: 0
