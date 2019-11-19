@@ -1,0 +1,6 @@
+newmtl Mat_Red_Grid_256
+map_Kd Base_Red_256.png
+bump Normal_Square_Grid_256.png
+Kd 1 1 1
+d 1
+
