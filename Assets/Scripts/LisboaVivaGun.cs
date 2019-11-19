@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 ﻿using UnityEngine;
 using UnityEditor;
 
 public class LisboaVivaGun : Gun
 {
+=======
+﻿using UnityEngine;
+using UnityEditor;
+
+public class LisboaVivaGun : Gun
+{
+>>>>>>> d65958c2885d57b6949274e4159c154bd591ccda
     public new void Shoot()
     {
 
@@ -16,4 +24,8 @@ public class LisboaVivaGun : Gun
             newProjectile.SetSpeed(muzzleVelocity);
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> d65958c2885d57b6949274e4159c154bd591ccda

@@ -153,10 +153,18 @@ public class Enemy2 : LivingEntity
         }
     }
 
+<<<<<<< HEAD
     void updateAnimation()
     {
         animator.SetBool("Walking", currentState == State.Chasing ? true : false);
         animator.SetBool("Idle", currentState == State.Idle ? true : false);
         animator.SetBool("Attacking", currentState == State.Attacking ? true : false);
+=======
+    void updateAnimation()
+    {
+        animator.SetBool("Walking", currentState == State.Chasing ? true : false);
+        animator.SetBool("Idle", currentState == State.Idle ? true : false);
+        animator.SetBool("Attacking", currentState == State.Attacking ? true : false);
+>>>>>>> d65958c2885d57b6949274e4159c154bd591ccda
     }
 }
