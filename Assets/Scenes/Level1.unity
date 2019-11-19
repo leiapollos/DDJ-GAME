@@ -4286,7 +4286,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponHold: {fileID: 732104198}
+<<<<<<< HEAD
+  startingGun: {fileID: -7847412467303081670, guid: 29960388d4f82ed4ebdc5f2560a8a7b4,
+=======
   startingGun: {fileID: 3553320784927855310, guid: 475ca12047ebb7d4eac8d36d3fec91fb,
+>>>>>>> d65958c2885d57b6949274e4159c154bd591ccda
     type: 3}
 --- !u!114 &461392538
 MonoBehaviour:
@@ -8551,7 +8555,11 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: fd2b047371fc2954098923fce8fabcde,
         type: 3}
       propertyPath: m_LocalPosition.x
+<<<<<<< HEAD
+      value: 0.54
+=======
       value: -0.653
+>>>>>>> d65958c2885d57b6949274e4159c154bd591ccda
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: fd2b047371fc2954098923fce8fabcde,
         type: 3}
@@ -20679,7 +20687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b32d848a00ebfb4fb56153ad3a87a5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy2: {fileID: -2291381918323139453, guid: 0c74bed2ad49fad4d94fca86441ad49f, type: 3}
+  enemy2: {fileID: 190028037277714813, guid: fb57b64fa7fceeb46a593f3d30aa65f8, type: 3}
   maxNumberOfZombies: 5
 --- !u!4 &2077369282
 Transform:
