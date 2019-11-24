@@ -29,9 +29,14 @@ public class Enemy2 : LivingEntity
     public float ignoreTargetDistance = 10.0f;
 
     float lastTime = 0;
+    public int distanceRange;
+
+
+    Vector3 startPos;
 
     protected override void Start()
     {
+        startPos = this.transform.position;
         lastTime = Time.time;
         base.Start();
         pathfinder = GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -55,6 +60,23 @@ public class Enemy2 : LivingEntity
 
         }
     }
+    protected void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag != "Subway")
+        {
+            Physics.IgnoreCollision(col.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+        }
+    }
+
+
+    //protected void OnTriggerEnter(Collider col)
+    //{
+    //    if(col.gameObject.tag != "Subway")
+    //    {
+    //        Debug.Log(col.gameObject.name);
+    //        Physics.IgnoreCollision(col.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+    //    }
+    //}
 
     void OnTargetDeath()
     {
@@ -137,11 +159,10 @@ public class Enemy2 : LivingEntity
             }
             else if(Time.time - lastTime > 2)
             {
-                float x = Random.Range(-15, 15);
-                float z = Random.Range(-15, 15);
+                float x = Random.Range(startPos.x - distanceRange, startPos.x + distanceRange);
+                float z = Random.Range(startPos.z - distanceRange, startPos.z + distanceRange);
                 Vector3 tpos = new Vector3(x, 0, z);
-                Vector3 dirToTarget = (tpos - transform.position).normalized;
-                Debug.Log(tpos);
+                Vector3 dirToTarget = (tpos - startPos).normalized;
                 Vector3 targetPosition = tpos - dirToTarget / 2;
                 if (!dead)
                 {

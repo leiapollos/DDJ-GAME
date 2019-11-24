@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner2 : MonoBehaviour
 {
     public Enemy2 enemy2;
-    public int maxNumberOfZombies = 3;
+    public int maxNumberOfZombies;
+    public int range;
+    public int timeInterval;
     List<Enemy2> currentZombies = new List<Enemy2>();
 
     float x = 0;
@@ -18,10 +19,10 @@ public class Spawner2 : MonoBehaviour
     public void Start()
     {
         lastTime = Time.time;
-        for(int i = 0; i < maxNumberOfZombies; i++)
+        for (int i = 0; i < maxNumberOfZombies; i++)
         {
-            x = Random.Range(-10, 10);
-            z = Random.Range(-10, 10);
+            x = Random.Range(this.transform.position.x - range, this.transform.position.x + range);
+            z = Random.Range(this.transform.position.z - range, this.transform.position.z + range);
             pos = new Vector3(x, y, z);
             spawnedEnemy = Instantiate(enemy2, pos, Quaternion.identity) as Enemy2;
             currentZombies.Add(spawnedEnemy);
@@ -32,23 +33,23 @@ public class Spawner2 : MonoBehaviour
     public void FixedUpdate()
     {
 
-        if(Time.time - lastTime > 5)
+        if (Time.time - lastTime > timeInterval && currentZombies.Count < maxNumberOfZombies)
         {
-            while (currentZombies.Count < maxNumberOfZombies)
-            {
-                x = Random.Range(-10, 10);
-                z = Random.Range(-10, 10);
-                pos = new Vector3(x, y, z);
-                spawnedEnemy = Instantiate(enemy2, pos, Quaternion.identity) as Enemy2;
-                currentZombies.Add(spawnedEnemy);
-            }
+            //while (currentZombies.Count < maxNumberOfZombies)
+            //{
+            x = Random.Range(this.transform.position.x -range, this.transform.position.x + range);
+            z = Random.Range(this.transform.position.z - range, this.transform.position.z + range);
+            pos = new Vector3(x, y, z);
+            spawnedEnemy = Instantiate(enemy2, pos, Quaternion.identity) as Enemy2;
+            currentZombies.Add(spawnedEnemy);
+            //}
             lastTime = Time.time;
         }
         for (int i = 0; i < currentZombies.Count; i++)
         {
             if (currentZombies[i] == null)
                 currentZombies.RemoveAt(i);
-        }            
+        }
     }
 
 }
