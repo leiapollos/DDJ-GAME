@@ -56,6 +56,14 @@ public class Player : LivingEntity
         updateAnimation();
     }
 
+    protected void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "Subway")
+        {
+            Physics.IgnoreCollision(col.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+        }
+    }
+
 
     void updateAnimation()
     {

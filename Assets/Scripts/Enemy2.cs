@@ -71,7 +71,8 @@ public class Enemy2 : LivingEntity
 
     //protected void OnTriggerEnter(Collider col)
     //{
-    //    if(col.gameObject.tag != "Subway")
+    //    Debug.Log(col);
+    //    if (col.gameObject.tag != "Subway")
     //    {
     //        Debug.Log(col.gameObject.name);
     //        Physics.IgnoreCollision(col.gameObject.GetComponent<Collider>(), GetComponent<Collider>());

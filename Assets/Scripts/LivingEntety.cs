@@ -29,11 +29,11 @@ public class LivingEntity : MonoBehaviour, IDamageable
     {
         health -= damage;
 
-        //if(this.gameObject.tag == "Player" )
-        //{
-        healthbar.fillAmount = health / startingHealth;
+        if(this.gameObject.tag != "Person" )
+        {
+            healthbar.fillAmount = health / startingHealth;
 
-        //}
+        }
 
         if (health <= 0 && !dead)
         {
