@@ -176,12 +176,11 @@ public class Enemy2 : LivingEntity
         animator.SetBool("Attacking", currentState == State.Attacking ? true : false);
     }
 
-    protected void OnCollisionEnter(Collision col)
-    {
-        Debug.Log(col.gameObject.tag);
-        if (col.gameObject.tag != "Subway")
-        {
-            Physics.IgnoreCollision(col.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
-        }
-    }
+    //protected void OnCollisionEnter(Collision col)
+    //{
+    //    if (col.gameObject.tag != "Subway")
+    //    {
+    //        Physics.IgnoreCollision(col.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+    //    }
+    //}
 }

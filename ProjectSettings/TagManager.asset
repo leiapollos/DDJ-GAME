@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Invisible
   - Subway
+  - Person
   layers:
   - Default
   - TransparentFX

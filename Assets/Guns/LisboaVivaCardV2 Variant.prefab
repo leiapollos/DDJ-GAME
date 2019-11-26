@@ -27,6 +27,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LisboaVivaCardV2 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 24b9d19c13d43964c9647ac2b02f8297,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 24b9d19c13d43964c9647ac2b02f8297,
         type: 3}
       propertyPath: m_LocalPosition.x

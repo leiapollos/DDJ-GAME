@@ -28,9 +28,10 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public void TakeDamage(float damage)
     {
         health -= damage;
-
+        
         if(this.gameObject.tag != "Person" )
         {
+            Debug.Log(this.gameObject.tag);
             healthbar.fillAmount = health / startingHealth;
 
         }
