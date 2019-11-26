@@ -5,6 +5,8 @@ using System.Collections;
 [RequireComponent(typeof(GunController))]
 public class Player : LivingEntity
 {
+    public enum State { Idle, Run, Shoot };
+    State currentState;
 
     public float moveSpeed = 5;
 
@@ -12,21 +14,26 @@ public class Player : LivingEntity
     PlayerController controller;
     GunController gunController;
 
+    Animator animator;
+
     protected override void Start()
     {
         base.Start();
         controller = GetComponent<PlayerController>();
         gunController = GetComponent<GunController>();
+        animator = GetComponent<Animator>();
         viewCamera = Camera.main;
+        currentState = State.Idle;
     }
 
     void Update()
     {
         // Movement input
-
+        Vector3 oldPos = transform.position;
         Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         Vector3 moveVelocity = moveInput.normalized * moveSpeed;
         controller.Move(moveVelocity);
+
 
         // Look input
         Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
@@ -44,6 +51,18 @@ public class Player : LivingEntity
         if (Input.GetMouseButton(0))
         {
             gunController.Shoot();
+            currentState = State.Shoot;
         }
+        updateAnimation();
     }
+
+
+    void updateAnimation()
+    {
+        animator.SetBool("Run", currentState == State.Run ? true : false);
+        animator.SetBool("Idle", currentState == State.Idle ? true : false);
+        animator.SetBool("Shoot", currentState == State.Shoot ? true : false);
+    }
+
+
 }

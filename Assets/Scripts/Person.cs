@@ -5,7 +5,7 @@ using UnityEngine;
 public class Person : LivingEntity
 {
 
-    public enum State { Idle, Chasing};
+    public enum State { Idle, Walk};
     State currentState;
 
     UnityEngine.AI.NavMeshAgent pathfinder;
@@ -39,7 +39,7 @@ public class Person : LivingEntity
 
         if (GameObject.FindGameObjectWithTag("Player") != null)
         {
-            currentState = State.Chasing;
+            currentState = State.Walk;
             hasTarget = true;
 
             target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -80,7 +80,7 @@ public class Person : LivingEntity
             {
                 pathfinder.SetDestination(finalPos);
             }
-            else if (currentState == State.Chasing && (target.position - transform.position).magnitude < ignoreTargetDistance)
+            else if (currentState == State.Walk && (target.position - transform.position).magnitude < ignoreTargetDistance)
             {
                 Vector3 dirToTarget = (target.position - transform.position).normalized;
                 Vector3 targetPosition = target.position - dirToTarget * (myCollisionRadius + targetCollisionRadius  / 2);
@@ -93,9 +93,9 @@ public class Person : LivingEntity
         }
     }
 
-    //void updateAnimation()
-    //{
-    //    animator.SetBool("Walking", currentState == State.Chasing ? true : false);
-    //    animator.SetBool("Idle", currentState == State.Idle ? true : false);
-    //}
+    void updateAnimation()
+    {
+        animator.SetBool("Walk", currentState == State.Walk ? true : false);
+        animator.SetBool("Idle", currentState == State.Idle ? true : false);
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class LivingEntity : MonoBehaviour, IDamageable
 {
@@ -9,6 +10,9 @@ public class LivingEntity : MonoBehaviour, IDamageable
     protected bool dead;
 
     public event System.Action OnDeath;
+
+    public Image healthbar;
+
 
     protected virtual void Start()
     {
@@ -24,6 +28,12 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public void TakeDamage(float damage)
     {
         health -= damage;
+
+        //if(this.gameObject.tag == "Player" )
+        //{
+        healthbar.fillAmount = health / startingHealth;
+
+        //}
 
         if (health <= 0 && !dead)
         {

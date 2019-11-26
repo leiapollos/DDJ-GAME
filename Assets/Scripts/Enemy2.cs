@@ -40,9 +40,9 @@ public class Enemy2 : LivingEntity
         lastTime = Time.time;
         base.Start();
         pathfinder = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        skinMaterial = GetComponent<Renderer>().material;
+        //skinMaterial = GetComponent<Renderer>().material;
         animator = GetComponent<Animator>();
-        originalColour = skinMaterial.color;
+        //originalColour = skinMaterial.color;
 
         if (GameObject.FindGameObjectWithTag("Player") != null)
         {
@@ -118,7 +118,7 @@ public class Enemy2 : LivingEntity
         float attackSpeed = 3;
         float percent = 0;
 
-        skinMaterial.color = Color.red;
+        //skinMaterial.color = Color.red;
         bool hasAppliedDamage = false;
 
         while (percent <= 1)
@@ -137,7 +137,7 @@ public class Enemy2 : LivingEntity
             yield return null;
         }
 
-        skinMaterial.color = originalColour;
+        //skinMaterial.color = originalColour;
         currentState = State.Chasing;
         pathfinder.enabled = true;
     }
@@ -176,7 +176,7 @@ public class Enemy2 : LivingEntity
 
     void updateAnimation()
     {
-        animator.SetBool("Walking", currentState == State.Chasing ? true : false);
+        animator.SetBool("Chasing", currentState == State.Chasing ? true : false);
         animator.SetBool("Idle", currentState == State.Idle ? true : false);
         animator.SetBool("Attacking", currentState == State.Attacking ? true : false);
     }
