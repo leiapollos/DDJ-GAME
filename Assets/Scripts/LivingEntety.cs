@@ -31,9 +31,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         
         if(this.gameObject.tag != "Person" )
         {
-            Debug.Log(this.gameObject.tag);
             healthbar.fillAmount = health / startingHealth;
-
         }
 
         if (health <= 0 && !dead)
