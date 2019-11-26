@@ -60,13 +60,7 @@ public class Enemy2 : LivingEntity
 
         }
     }
-    protected void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject.tag != "Subway")
-        {
-            Physics.IgnoreCollision(col.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
-        }
-    }
+
 
 
     //protected void OnTriggerEnter(Collider col)
@@ -180,5 +174,14 @@ public class Enemy2 : LivingEntity
         animator.SetBool("Chasing", currentState == State.Chasing ? true : false);
         animator.SetBool("Idle", currentState == State.Idle ? true : false);
         animator.SetBool("Attacking", currentState == State.Attacking ? true : false);
+    }
+
+    protected void OnCollisionEnter(Collision col)
+    {
+        Debug.Log(col.gameObject.tag);
+        if (col.gameObject.tag != "Subway")
+        {
+            Physics.IgnoreCollision(col.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+        }
     }
 }
