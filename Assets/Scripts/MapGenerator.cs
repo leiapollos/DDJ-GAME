@@ -7,6 +7,7 @@ public class MapGenerator : MonoBehaviour
 
     public Map[] maps;
     public int mapIndex;
+    public Obstacle obstacle;
 
     public Transform tilePrefab;
     public Transform obstaclePrefab;
@@ -91,7 +92,8 @@ public class MapGenerator : MonoBehaviour
                 float obstacleHeight = Mathf.Lerp(currentMap.minObstacleHeight, currentMap.maxObstacleHeight, (float)prng.NextDouble());
                 Vector3 obstaclePosition = CoordToPosition(randomCoord.x, randomCoord.y);
 
-                Transform newObstacle = Instantiate(obstaclePrefab, obstaclePosition + Vector3.up * obstacleHeight / 2, Quaternion.identity) as Transform;
+                //Transform newObstacle = Instantiate(obstaclePrefab, obstaclePosition + Vector3.up * obstacleHeight / 2, Quaternion.identity) as Transform;
+                Transform newObstacle = obstacle.create(obstaclePosition + Vector3.up * obstacleHeight / 2, Quaternion.identity) as Transform;
                 newObstacle.parent = mapHolder;
                 newObstacle.localScale = new Vector3((1 - outlinePercent) * tileSize, obstacleHeight, (1 - outlinePercent) * tileSize);
 
