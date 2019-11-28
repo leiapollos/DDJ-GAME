@@ -58,6 +58,7 @@ public class Person : LivingEntity
         if((this.transform.position - finalPos).magnitude < 1)
         {
             Destroy(this.gameObject);
+            this.GetComponent<LivingEntity>().gameController.GetComponent<GameController>().UpdateScore(3);
             Debug.Log("Saved!");
         }
 

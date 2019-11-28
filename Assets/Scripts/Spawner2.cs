@@ -6,7 +6,8 @@ public class Spawner2 : MonoBehaviour
     public Enemy2 enemy2;
     public int maxNumberOfZombies;
     public int range;
-    public int timeInterval;
+    int timeInterval = 10;
+    int newWaveTimeInterval = 30;
     List<Enemy2> currentZombies = new List<Enemy2>();
 
     float x = 0;
@@ -15,9 +16,11 @@ public class Spawner2 : MonoBehaviour
     Enemy2 spawnedEnemy = null;
     Vector3 pos;
     float lastTime = 0;
+    float lastWaveTime = 0;
 
     public void Start()
     {
+        lastWaveTime = Time.time;
         lastTime = Time.time;
         for (int i = 0; i < maxNumberOfZombies; i++)
         {
@@ -32,6 +35,12 @@ public class Spawner2 : MonoBehaviour
 
     public void FixedUpdate()
     {
+        if (Time.time - lastWaveTime > newWaveTimeInterval)
+        {
+           // Debug.Log(Time.time);
+            maxNumberOfZombies = maxNumberOfZombies + Mathf.RoundToInt(maxNumberOfZombies / 2);
+            lastWaveTime = Time.time;
+        }
 
         if (Time.time - lastTime > timeInterval && currentZombies.Count < maxNumberOfZombies)
         {

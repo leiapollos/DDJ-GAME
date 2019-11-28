@@ -16,6 +16,7 @@ public class Player : LivingEntity
 
     Animator animator;
 
+
     protected override void Start()
     {
         base.Start();
@@ -31,9 +32,11 @@ public class Player : LivingEntity
         // Movement input
         Vector3 oldPos = transform.position;
         Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        //moveInput = transform.TransformDirection(moveInput); //remove this to go back to normal
         Vector3 moveVelocity = moveInput.normalized * moveSpeed;
         controller.Move(moveVelocity);
 
+        //transform.Rotate(0, Input.GetAxis("Horizontal"), 0); //remove this to go back to normal
 
         // Look input
         Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
@@ -56,7 +59,8 @@ public class Player : LivingEntity
         updateAnimation();
     }
 
-    protected void OnCollisionEnter(Collision col)
+
+        protected void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "Subway")
         {

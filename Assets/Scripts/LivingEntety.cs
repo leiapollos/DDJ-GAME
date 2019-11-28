@@ -7,16 +7,18 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public float startingHealth;
     protected float health;
-    protected bool dead;
+    public bool dead;
 
     public event System.Action OnDeath;
 
     public Image healthbar;
 
+    public GameObject gameController;
 
     protected virtual void Start()
     {
         health = startingHealth;
+        gameController = GameObject.FindGameObjectWithTag("GameController");
     }
 
     public void TakeHit(float damage, RaycastHit hit)
@@ -28,11 +30,9 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public void TakeDamage(float damage)
     {
         health -= damage;
-        
-        if(this.gameObject.tag != "Person" )
-        {
-            healthbar.fillAmount = health / startingHealth;
-        }
+
+
+        healthbar.fillAmount = health / startingHealth;
 
         if (health <= 0 && !dead)
         {
@@ -47,6 +47,17 @@ public class LivingEntity : MonoBehaviour, IDamageable
         {
             OnDeath();
         }
+        if (this.gameObject.tag == "Enemy")
+        {
+            gameController.GetComponent<GameController>().UpdateScore(1);
+        }
+        else if (this.gameObject.tag == "Person")
+        {
+            gameController.GetComponent<GameController>().UpdateScore(-5);
+        }
+
         GameObject.Destroy(gameObject);
+        
     }
+
 }

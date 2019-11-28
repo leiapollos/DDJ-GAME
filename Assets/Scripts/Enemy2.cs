@@ -31,7 +31,6 @@ public class Enemy2 : LivingEntity
     float lastTime = 0;
     public int distanceRange;
 
-
     Vector3 startPos;
 
     protected override void Start()

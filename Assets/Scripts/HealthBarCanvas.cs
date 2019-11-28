@@ -16,11 +16,10 @@ public class HealthBarCanvas : MonoBehaviour
 
     void Update()
     {
-        Vector3 relativePos = target.position - transform.position;
+        Vector3 relativePos = Camera.main.transform.position - transform.position;
 
         Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
         transform.rotation = rotation;
 
-        transform.rotation = rotation;
     }
 }
