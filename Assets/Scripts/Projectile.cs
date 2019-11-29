@@ -65,4 +65,13 @@ public class Projectile : MonoBehaviour
         }
         GameObject.Destroy(gameObject);
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.gameObject.name);
+        if(collision.gameObject.tag == "Subway")
+        {
+            Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+        }
+    }
 }

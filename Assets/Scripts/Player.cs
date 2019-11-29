@@ -14,6 +14,8 @@ public class Player : LivingEntity
     PlayerController controller;
     GunController gunController;
 
+    public bool shooting = false;
+
     Animator animator;
 
 
@@ -53,8 +55,13 @@ public class Player : LivingEntity
         // Weapon input
         if (Input.GetMouseButton(0))
         {
+            shooting = true;
             gunController.Shoot();
             currentState = State.Shoot;
+        }
+        else
+        {
+            shooting = false;
         }
         updateAnimation();
     }

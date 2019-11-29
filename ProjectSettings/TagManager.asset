@@ -6,8 +6,9 @@ TagManager:
   tags:
   - Invisible
   - Subway
-  - Person
   - Enemy
+  - Civilian
+  - Hidding Spot
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Enemy
   - Player
   - Invisible
-  - 
+  - SubwayInvisibleWall
   - 
   - 
   - 

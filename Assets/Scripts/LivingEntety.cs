@@ -51,7 +51,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         {
             gameController.GetComponent<GameController>().UpdateScore(1);
         }
-        else if (this.gameObject.tag == "Person")
+        else if (this.gameObject.tag == "Civilian")
         {
             gameController.GetComponent<GameController>().UpdateScore(-5);
         }

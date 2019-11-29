@@ -26,7 +26,7 @@ public class Enemy2 : LivingEntity
 
     bool hasTarget;
 
-    public float ignoreTargetDistance = 10.0f;
+    public float ignoreTargetDistance;
 
     float lastTime = 0;
     public int distanceRange;
@@ -144,6 +144,7 @@ public class Enemy2 : LivingEntity
         {
             if (currentState == State.Chasing && (target.position - transform.position).magnitude < ignoreTargetDistance)
             {
+                pathfinder.speed = 6f;
                 Vector3 dirToTarget = (target.position - transform.position).normalized;
                 Vector3 targetPosition = target.position - dirToTarget * (myCollisionRadius + targetCollisionRadius + attackDistanceThreshold / 2);
                 if (!dead)
@@ -153,6 +154,7 @@ public class Enemy2 : LivingEntity
             }
             else if(Time.time - lastTime > 2)
             {
+                pathfinder.speed = 3.5f;
                 float x = Random.Range(startPos.x - distanceRange, startPos.x + distanceRange);
                 float z = Random.Range(startPos.z - distanceRange, startPos.z + distanceRange);
                 Vector3 tpos = new Vector3(x, 0, z);
