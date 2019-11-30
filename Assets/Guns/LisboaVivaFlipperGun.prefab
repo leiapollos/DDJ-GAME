@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5615754414386637369
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 100230940124784426}
+  m_Layer: 0
+  m_Name: Muzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &100230940124784426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5615754414386637369}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.823, y: 0.839, z: -0.094}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5693570269346477779}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &4077785891606008005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8743956544922174656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb5f19c03049fcd49ac90e68eb9d1302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muzzle: {fileID: 970216357021219073, guid: 29960388d4f82ed4ebdc5f2560a8a7b4, type: 3}
+  projectile: {fileID: 4406345633517650105, guid: 8644f57c89d93164abce7a36243ab908,
+    type: 3}
+  msBetweenShots: 150
+  muzzleVelocity: 20
 --- !u!1001 &754681897745292745
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10,7 +57,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: fd2b047371fc2954098923fce8fabcde,
         type: 3}
       propertyPath: m_Name
-      value: LisboaVivaFlipperGun Variant
+      value: LisboaVivaFlipperGun
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: fd2b047371fc2954098923fce8fabcde,
         type: 3}
@@ -69,3 +116,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd2b047371fc2954098923fce8fabcde, type: 3}
+--- !u!1 &8743956544922174656 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: fd2b047371fc2954098923fce8fabcde,
+    type: 3}
+  m_PrefabInstance: {fileID: 754681897745292745}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5693570269346477779 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: fd2b047371fc2954098923fce8fabcde,
+    type: 3}
+  m_PrefabInstance: {fileID: 754681897745292745}
+  m_PrefabAsset: {fileID: 0}

@@ -38,6 +38,13 @@ public class Player : LivingEntity
         Vector3 moveVelocity = moveInput.normalized * moveSpeed;
         controller.Move(moveVelocity);
 
+        if (moveVelocity.sqrMagnitude > 0.0001f)
+        {      
+            currentState = State.Run;
+        }
+        else currentState = State.Idle;
+        
+
         //transform.Rotate(0, Input.GetAxis("Horizontal"), 0); //remove this to go back to normal
 
         // Look input
@@ -57,7 +64,6 @@ public class Player : LivingEntity
         {
             shooting = true;
             gunController.Shoot();
-            currentState = State.Shoot;
         }
         else
         {
@@ -80,7 +86,7 @@ public class Player : LivingEntity
     {
         animator.SetBool("Run", currentState == State.Run ? true : false);
         animator.SetBool("Idle", currentState == State.Idle ? true : false);
-        animator.SetBool("Shoot", currentState == State.Shoot ? true : false);
+        //animator.SetBool("Shoot", currentState == State.Shoot ? true : false);
     }
 
 

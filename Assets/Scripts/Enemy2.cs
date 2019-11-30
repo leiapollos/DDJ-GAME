@@ -80,7 +80,7 @@ public class Enemy2 : LivingEntity
 
     void Update()
     {
-
+        getClosestTarget();
         if (hasTarget)
         {
             if (Time.time > nextAttackTime)
@@ -94,6 +94,12 @@ public class Enemy2 : LivingEntity
 
             }
         }
+
+        if (this.pathfinder.velocity.sqrMagnitude > 0.001f)
+        {
+            currentState = State.Chasing;
+        }
+        else currentState = State.Idle;
 
         updateAnimation();
 
@@ -117,6 +123,7 @@ public class Enemy2 : LivingEntity
 
         while (percent <= 1)
         {
+            currentState = State.Attacking;
 
             if (percent >= .5f && !hasAppliedDamage)
             {
@@ -140,31 +147,29 @@ public class Enemy2 : LivingEntity
     {
 
         float refreshRate = .25f;
+
         while (hasTarget)
         {
-            if (currentState == State.Chasing && (target.position - transform.position).magnitude < ignoreTargetDistance)
+            if (!dead && this.currentState != State.Attacking)
             {
-                pathfinder.speed = 6f;
-                Vector3 dirToTarget = (target.position - transform.position).normalized;
-                Vector3 targetPosition = target.position - dirToTarget * (myCollisionRadius + targetCollisionRadius + attackDistanceThreshold / 2);
-                if (!dead)
+                if (currentState == State.Chasing && (target.position - transform.position).magnitude < ignoreTargetDistance)
                 {
+                    pathfinder.speed = 6f;
+                    Vector3 dirToTarget = (target.position - transform.position).normalized;
+                    Vector3 targetPosition = target.position - dirToTarget * (myCollisionRadius + targetCollisionRadius + attackDistanceThreshold / 2);
                     pathfinder.SetDestination(targetPosition);
                 }
-            }
-            else if(Time.time - lastTime > 2)
-            {
-                pathfinder.speed = 3.5f;
-                float x = Random.Range(startPos.x - distanceRange, startPos.x + distanceRange);
-                float z = Random.Range(startPos.z - distanceRange, startPos.z + distanceRange);
-                Vector3 tpos = new Vector3(x, 0, z);
-                Vector3 dirToTarget = (tpos - startPos).normalized;
-                Vector3 targetPosition = tpos - dirToTarget / 2;
-                if (!dead)
+                else if (Time.time - lastTime > 2)
                 {
+                    pathfinder.speed = 3.5f;
+                    float x = Random.Range(startPos.x - distanceRange, startPos.x + distanceRange);
+                    float z = Random.Range(startPos.z - distanceRange, startPos.z + distanceRange);
+                    Vector3 tpos = new Vector3(x, 0, z);
+                    Vector3 dirToTarget = (tpos - startPos).normalized;
+                    Vector3 targetPosition = tpos - dirToTarget / 2;
                     pathfinder.SetDestination(targetPosition);
+                    lastTime = Time.time;
                 }
-                lastTime = Time.time;
             }
             yield return new WaitForSeconds(refreshRate);
         }
@@ -177,6 +182,35 @@ public class Enemy2 : LivingEntity
         animator.SetBool("Attacking", currentState == State.Attacking ? true : false);
     }
 
+    void getClosestTarget()
+    {
+        var closestTarget = GameObject.FindGameObjectWithTag("Player");
+
+        if (closestTarget == null)
+        {
+            hasTarget = false;
+            return;
+        }
+
+        var smallestDistance = (closestTarget.transform.position - this.transform.position).sqrMagnitude;
+
+        foreach (var target in GameObject.FindGameObjectsWithTag("Civilian"))
+        {
+            if (target.GetComponent<Civilian>().inHiding) break;//Zombies don't attack people who are hiding
+
+            var distance = (target.transform.position - this.transform.position).sqrMagnitude;
+            if (distance < smallestDistance)
+            {
+                smallestDistance = distance;
+                closestTarget = target;
+            }
+        }
+
+        this.target = closestTarget.transform;
+        this.targetEntity = target.GetComponent<LivingEntity>();
+        targetEntity.OnDeath += OnTargetDeath;
+        hasTarget = true;
+    }
     //protected void OnCollisionEnter(Collision col)
     //{
     //    if (col.gameObject.tag != "Subway")

@@ -97,6 +97,7 @@ public class GameController : MonoBehaviour
         float closestMagnitude = 10000;
         foreach (GameObject zombie in zombies)
         {
+            if (zombie == null) continue;
             if ((zombie.transform.position - civilian.position).magnitude < closestMagnitude)
             {
                 closest = zombie.transform;

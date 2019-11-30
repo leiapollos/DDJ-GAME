@@ -5,7 +5,7 @@ using UnityEngine;
 public class Civilian : LivingEntity
 {
 
-    public enum State { Idle, Walk };
+    public enum State { Idle, Run };
     State currentState;
 
     UnityEngine.AI.NavMeshAgent pathfinder;
@@ -26,8 +26,9 @@ public class Civilian : LivingEntity
     Vector3 finalPos;
     bool goTo = false;
 
-    bool hide = false;
-    Vector3 hiddingSpot;
+    protected bool hide = true;
+    public bool inHiding = true;
+    Vector3 hidingSpot;
 
     GameObject player;
 
@@ -40,13 +41,13 @@ public class Civilian : LivingEntity
         //skinMaterial = GetComponent<Renderer>().material;
         animator = GetComponent<Animator>();
         //originalColour = skinMaterial.color;       
-
+        hidingSpot = GetComponent<LivingEntity>().gameController.GetComponent<GameController>().ClosestHiddingSpot(this.transform).position;
         GameObject finalPosObject = GameObject.FindGameObjectWithTag("Subway");
         finalPos = finalPosObject.transform.position;
 
         if (GameObject.FindGameObjectWithTag("Player") != null)
         {
-            currentState = State.Walk;
+            currentState = State.Idle;
 
             hasTarget = true;
 
@@ -64,6 +65,7 @@ public class Civilian : LivingEntity
 
     protected void Update()
     {
+        if (this.dead) return;
 
         if ((this.transform.position - finalPos).magnitude < 1)
         {
@@ -71,13 +73,16 @@ public class Civilian : LivingEntity
             GetComponent<LivingEntity>().gameController.GetComponent<GameController>().UpdateScore(3);
         }
 
-        if ((this.transform.position - hiddingSpot).magnitude < 1 || (player.GetComponent<Player>().shooting == false &&
-                    (GetComponent<LivingEntity>().gameController.GetComponent<GameController>().ClosestZombie(this.transform).position - this.transform.position).magnitude > 7 && Time.time - lastTime > 1.5f))
+        if ((this.transform.position - hidingSpot).magnitude < 2 ||
+                    ((GetComponent<LivingEntity>().gameController.GetComponent<GameController>().ClosestZombie(this.transform).position - this.transform.position).magnitude > 7 && Time.time - lastTime > 1.5f))
         {
             hide = false;
             pathfinder.speed = 3.5f;
         }
 
+        inHiding = (this.transform.position - hidingSpot).magnitude < 2 ? true : false;
+
+        updateAnimation();
     }
 
     protected void OnTriggerEnter(Collider col)
@@ -91,23 +96,23 @@ public class Civilian : LivingEntity
     {
 
         float refreshRate = .25f;
+        var targetPos = transform.position;
         while (hasTarget)
         {
             if(goTo == true)
             {
-                pathfinder.SetDestination(finalPos);
+                targetPos = finalPos;
             }
             else if(hide == true)
             {
                 pathfinder.speed = 6f;
-                hiddingSpot = GetComponent<LivingEntity>().gameController.GetComponent<GameController>().ClosestHiddingSpot(this.transform).position;
-                pathfinder.SetDestination(hiddingSpot);
+                hidingSpot = GetComponent<LivingEntity>().gameController.GetComponent<GameController>().ClosestHiddingSpot(this.transform).position;
+                targetPos = hidingSpot;
                 lastTime = Time.time;
             }
-            else if (currentState == State.Walk && (target.position - transform.position).magnitude < ignoreTargetDistance)
+            else if ((target.position - transform.position).magnitude < ignoreTargetDistance)
             {
-                if (player.GetComponent<Player>().shooting == true &&
-                    (GetComponent<LivingEntity>().gameController.GetComponent<GameController>().ClosestZombie(this.transform).position - this.transform.position).magnitude < 7)
+                if ((GetComponent<LivingEntity>().gameController.GetComponent<GameController>().ClosestZombie(this.transform).position - this.transform.position).magnitude < 7)
                 {
                     hide = true;
                 }
@@ -115,19 +120,26 @@ public class Civilian : LivingEntity
                 {
                     Vector3 dirToTarget = (target.position - transform.position).normalized;
                     Vector3 targetPosition = target.position - dirToTarget * (myCollisionRadius + targetCollisionRadius / 2);
-                    if (!dead)
-                    {
-                        pathfinder.SetDestination(targetPosition);
-                    }
+                    targetPos = targetPosition;
                 }
             }
+
+            pathfinder.SetDestination(targetPos);
+
+            //Update State
+            if (this.pathfinder.velocity.sqrMagnitude > 0.001f)
+            {
+                currentState = State.Run;
+            }
+            else currentState = State.Idle;
+
             yield return new WaitForSeconds(refreshRate);
         }
     }
 
     void updateAnimation()
     {
-        animator.SetBool("Walk", currentState == State.Walk ? true : false);
+        animator.SetBool("Run", currentState == State.Run ? true : false);
         animator.SetBool("Idle", currentState == State.Idle ? true : false);
     }
 }

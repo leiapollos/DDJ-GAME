@@ -42,11 +42,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09333d4308d932645a501be11cc81aca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 10
+  startingHealth: 5
   dead: 0
   healthbar: {fileID: 8216968374532190210}
   gameController: {fileID: 0}
-  ignoreTargetDistance: 5
+  ignoreTargetDistance: 7
+  hide: 1
 --- !u!195 &772117238552807138
 NavMeshAgent:
   m_ObjectHideFlags: 0
