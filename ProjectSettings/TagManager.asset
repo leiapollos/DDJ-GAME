@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Civilian
   - Hidding Spot
+  - Pickable
   layers:
   - Default
   - TransparentFX

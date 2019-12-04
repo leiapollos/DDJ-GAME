@@ -13,6 +13,7 @@ public class Player : LivingEntity
     Camera viewCamera;
     PlayerController controller;
     GunController gunController;
+    public PowerUp vomitPowerUp;
 
     public bool shooting = false;
 
@@ -73,11 +74,18 @@ public class Player : LivingEntity
     }
 
 
-        protected void OnCollisionEnter(Collision col)
+    protected void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "Subway")
         {
+            Debug.Log("Sub");
             Physics.IgnoreCollision(col.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+        }
+
+        if (col.gameObject.tag == "Pickable")
+        {
+            vomitPowerUp.Aquire();
+            Destroy(col.gameObject);
         }
     }
 
@@ -88,6 +96,4 @@ public class Player : LivingEntity
         animator.SetBool("Idle", currentState == State.Idle ? true : false);
         //animator.SetBool("Shoot", currentState == State.Shoot ? true : false);
     }
-
-
 }

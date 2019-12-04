@@ -13,7 +13,6 @@ public class Gun : MonoBehaviour
 
     public void Shoot()
     {
-
         if (Time.time > nextShotTime)
         {
             nextShotTime = Time.time + msBetweenShots / 1000;
