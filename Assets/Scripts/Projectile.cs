@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour
 {
-
     public LayerMask collisionMask;
     float speed = 10;
     float damage = 1;
@@ -31,7 +30,8 @@ public class Projectile : MonoBehaviour
     {
         float moveDistance = speed * Time.deltaTime;
         CheckCollisions(moveDistance);
-        transform.Translate(Vector3.forward * moveDistance);
+        Vector3 translation = Vector3.forward * moveDistance;
+        transform.Translate(translation);
     }
 
 
