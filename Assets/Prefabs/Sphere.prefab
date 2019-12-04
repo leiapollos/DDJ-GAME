@@ -95,7 +95,7 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 257
-  lifetime: 2
+  lifetime: 0.5
 --- !u!54 &4424411296208470430
 Rigidbody:
   m_ObjectHideFlags: 0
