@@ -56,8 +56,10 @@ public class LivingEntity : MonoBehaviour, IDamageable
             gameController.GetComponent<GameController>().UpdateScore(-5);
         }
 
-        GameObject.Destroy(gameObject);
-        
-    }
+        var animator = gameObject.GetComponent<Animator>();
+        animator.SetTrigger("Death");
 
+        //GameObject.Destroy(gameObject);
+
+    }
 }

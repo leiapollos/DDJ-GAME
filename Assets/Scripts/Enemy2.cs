@@ -5,7 +5,7 @@ using System.Collections;
 public class Enemy2 : LivingEntity
 {
 
-    public enum State { Idle, Chasing, Attacking };
+    public enum State { Idle, Chasing, Attacking, Staggered };
     State currentState;
 
     UnityEngine.AI.NavMeshAgent pathfinder;
@@ -32,6 +32,10 @@ public class Enemy2 : LivingEntity
     public int distanceRange;
 
     Vector3 startPos;
+
+    [Range(0.0f, 1.0f)]
+    public float StaggerProbability;
+    private float staggerTimeout;
 
     protected override void Start()
     {
@@ -76,10 +80,37 @@ public class Enemy2 : LivingEntity
     {
         hasTarget = false;
         currentState = State.Idle;
+        //animator SET DEATH ANIMATION
+        //Maybe use END state in animator
     }
 
     void Update()
     {
+        if (dead)
+        {
+            var animInfo = animator.GetCurrentAnimatorStateInfo(0);
+            if (animInfo.IsName("Death") && (animInfo.normalizedTime >= 1))
+            {
+                GameObject.Destroy(this.gameObject);
+            }
+            return;
+        }
+
+        if (currentState == State.Staggered)
+        {
+            if (staggerTimeout <= 0)
+            {
+                //No longer staggered
+                currentState = State.Idle;
+            }
+            else
+            {
+                //Don't move and decrement timeout
+                pathfinder.SetDestination(this.transform.position);
+                staggerTimeout -= Time.deltaTime;
+            }
+        }
+
         getClosestTarget();
         if (hasTarget)
         {
@@ -95,7 +126,8 @@ public class Enemy2 : LivingEntity
             }
         }
 
-        if (this.pathfinder.velocity.sqrMagnitude > 0.001f)
+
+        if (this.pathfinder.velocity.sqrMagnitude > 0.01f)
         {
             currentState = State.Chasing;
         }
@@ -104,6 +136,7 @@ public class Enemy2 : LivingEntity
         updateAnimation();
 
     }
+
 
     IEnumerator Attack()
     {
@@ -123,6 +156,13 @@ public class Enemy2 : LivingEntity
 
         while (percent <= 1)
         {
+            //If zombie is staggered - Stop attacking:
+            if (currentState == State.Staggered)
+            {
+                percent = 1;
+                continue;
+            }
+
             currentState = State.Attacking;
 
             if (percent >= .5f && !hasAppliedDamage)
@@ -150,6 +190,12 @@ public class Enemy2 : LivingEntity
 
         while (hasTarget)
         {
+            if (currentState == State.Staggered)
+            {
+                pathfinder.velocity = Vector3.zero;
+                yield return new WaitForSeconds(Mathf.Max(staggerTimeout, 0.0f));
+            }
+
             if (!dead && this.currentState != State.Attacking)
             {
                 if (currentState == State.Chasing && (target.position - transform.position).magnitude < ignoreTargetDistance)
@@ -177,9 +223,13 @@ public class Enemy2 : LivingEntity
 
     void updateAnimation()
     {
-        animator.SetBool("Chasing", currentState == State.Chasing ? true : false);
-        animator.SetBool("Idle", currentState == State.Idle ? true : false);
-        animator.SetBool("Attacking", currentState == State.Attacking ? true : false);
+        switch (currentState)
+        {
+            case State.Chasing: animator.SetTrigger("Chasing"); break;
+            case State.Attacking: animator.SetTrigger("Attacking"); break;
+            case State.Staggered: animator.SetTrigger("Staggered"); break;
+            default: animator.SetTrigger("Idle"); break;
+        }
     }
 
     void getClosestTarget()
@@ -211,11 +261,29 @@ public class Enemy2 : LivingEntity
         targetEntity.OnDeath += OnTargetDeath;
         hasTarget = true;
     }
+
+    public void TriggerStagger()
+    {
+        if (currentState == State.Staggered) return;
+
+        if (Random.value > 1 - StaggerProbability)
+        {
+            currentState = State.Staggered;
+            staggerTimeout = 2;
+        }
+    }
+
     //protected void OnCollisionEnter(Collision col)
     //{
-    //    if (col.gameObject.tag != "Subway")
+    //    if (staggered == true) return;
+
+    //    if (col.gameObject.tag == "Bullet")
     //    {
-    //        Physics.IgnoreCollision(col.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+    //        Debug.Log("Hit");
+    //        if (Random.value > 0.9)
+    //        {
+    //            staggered = true;
+    //        }
     //    }
     //}
 }

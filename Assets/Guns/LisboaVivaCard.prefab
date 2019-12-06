@@ -15,6 +15,7 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 257
+  lifetime: 3
 --- !u!1001 &5183813870555344262
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25,12 +26,12 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 24b9d19c13d43964c9647ac2b02f8297,
         type: 3}
       propertyPath: m_Name
-      value: LisboaVivaCardV2 Variant
+      value: LisboaVivaCard
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 24b9d19c13d43964c9647ac2b02f8297,
         type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Bullet
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 24b9d19c13d43964c9647ac2b02f8297,
         type: 3}

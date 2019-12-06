@@ -52,6 +52,10 @@ public class Projectile : MonoBehaviour
         if (damageableObject != null)
         {
             damageableObject.TakeHit(damage, hit);
+            if (hit.collider.tag == "Enemy")
+            {
+                hit.collider.GetComponent<Enemy2>().TriggerStagger();
+            }
         }
         GameObject.Destroy(gameObject);
     }
