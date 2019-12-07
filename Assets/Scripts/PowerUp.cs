@@ -9,12 +9,14 @@ public class PowerUp : MonoBehaviour
     public bool used;
     protected KeyCode keyCode;
     public Image keyImage;
+    public string name;
 
     public PowerUp()
     {
         keyCode = KeyCode.Space;
         aquired = false;
         used = false;
+        name = "default";
     }
     // Start is called before the first frame update
     void Start()

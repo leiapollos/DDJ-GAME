@@ -40,6 +40,14 @@ public class LivingEntity : MonoBehaviour, IDamageable
         }
     }
 
+    public void AddHealth(int ammount)
+    {
+        Debug.Log(health);
+        health =  health + ammount > startingHealth? startingHealth : health + ammount;
+        healthbar.fillAmount = health / startingHealth;
+        Debug.Log(health);
+    }
+
     protected void Die()
     {
         dead = true;

@@ -9,8 +9,9 @@ TagManager:
   - Enemy
   - Civilian
   - Hidding Spot
-  - Pickable
   - Bullet
+  - Vommit_PowerUP
+  - Health_PowerUP
   layers:
   - Default
   - TransparentFX

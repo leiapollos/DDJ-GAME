@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(GunController))]
@@ -13,7 +14,7 @@ public class Player : LivingEntity
     Camera viewCamera;
     PlayerController controller;
     GunController gunController;
-    public PowerUp vomitPowerUp;
+    public List<PowerUp> powerUps;
 
     public bool shooting = false;
 
@@ -81,11 +82,14 @@ public class Player : LivingEntity
             Debug.Log("Sub");
             Physics.IgnoreCollision(col.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
-
-        if (col.gameObject.tag == "Pickable")
+        foreach (var p in powerUps)
         {
-            vomitPowerUp.Aquire();
-            Destroy(col.gameObject);
+            if (p.name == col.gameObject.tag)
+            {
+                p.Aquire();
+                Destroy(col.gameObject);
+                break;
+            }
         }
     }
 
