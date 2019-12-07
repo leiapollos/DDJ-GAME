@@ -33,6 +33,12 @@ public class Player : LivingEntity
 
     void Update()
     {
+        if (dead)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
         // Movement input
         Vector3 oldPos = transform.position;
         Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));

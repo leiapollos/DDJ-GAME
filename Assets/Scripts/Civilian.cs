@@ -65,7 +65,11 @@ public class Civilian : LivingEntity
 
     protected void Update()
     {
-        if (this.dead) return;
+        if (this.dead)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
 
         if ((this.transform.position - finalPos).magnitude < 1)
         {

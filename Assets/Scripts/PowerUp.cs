@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class PowerUp : MonoBehaviour
 {
-    public bool aquired;
-    public bool used;
+    protected bool aquired, used;
     protected KeyCode keyCode;
     public Image keyImage;
     public string name;
@@ -21,6 +20,7 @@ public class PowerUp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ImageToggle(false);
     }
 
     // Update is called once per frame
@@ -30,19 +30,19 @@ public class PowerUp : MonoBehaviour
         {
             if (Input.GetKey(keyCode))
             {
-                UsePowerUp();
+                Prepare();
                 ExecutePowerUp();
             }
         }
     }
+
     public void Aquire()
     {
-        Debug.Log("Aquired!!");
         keyImage.enabled = true;
         aquired = true;
     }
 
-    protected virtual void UsePowerUp()
+    protected virtual void Prepare()
     {
         Debug.Log("PoweUP was not initialized.");
     }
@@ -50,5 +50,16 @@ public class PowerUp : MonoBehaviour
     protected virtual void ExecutePowerUp()
     {
         Debug.Log("PoweUP was not initialized.");
+    }
+
+    public virtual void Finish()
+    {
+        aquired = false;
+        ImageToggle(false);
+    }
+
+    protected void ImageToggle(bool state)
+    {
+        keyImage.enabled = state;
     }
 }

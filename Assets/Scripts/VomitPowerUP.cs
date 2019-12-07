@@ -7,7 +7,6 @@ public class VomitPowerUP : PowerUp
 {
     public Gun gun;
     protected float powerUpTime;
-    // Start is called before the first frame update
 
     public VomitPowerUP() : base()
     {
@@ -15,7 +14,7 @@ public class VomitPowerUP : PowerUp
         name = "Vommit_PowerUP";
     }
 
-    protected override void UsePowerUp()
+    protected override void Prepare()
     {
         if (!used)
         {
@@ -24,8 +23,7 @@ public class VomitPowerUP : PowerUp
         }
         if (Time.time - powerUpTime > 5)
         {
-            aquired = false;
-            keyImage.enabled = false;
+            Finish();
         }
     }
 

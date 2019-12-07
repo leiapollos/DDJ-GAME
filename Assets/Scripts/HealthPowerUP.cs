@@ -12,26 +12,21 @@ public class HealthPowerUP : PowerUp
 
     public HealthPowerUP() : base()
     {
-        keyCode = KeyCode.E;
+        keyCode = KeyCode.R;
         name = "Health_PowerUP";
     }
 
-    protected override void UsePowerUp()
+    protected override void Prepare()
     {
         if (!used)
         {
-            player.AddHealth(healthAmmount);
-            powerUpTime = Time.time;
             used = true;
-        }
-        if (Time.time - powerUpTime > 1)
-        {
-            aquired = false;
-            keyImage.enabled = false;
         }
     }
 
     protected override void ExecutePowerUp()
     {
+        player.AddHealth(healthAmmount);
+        Finish();
     }
 }
