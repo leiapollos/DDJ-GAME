@@ -114,7 +114,7 @@ public class Civilian : LivingEntity
                 targetPos = hidingSpot;
                 lastTime = Time.time;
             }
-            else if ((target.position - transform.position).magnitude < ignoreTargetDistance)
+            else if ((target.position - transform.position).magnitude < ignoreTargetDistance && !targetEntity.dead)
             {
                 if ((GetComponent<LivingEntity>().gameController.GetComponent<GameController>().ClosestZombie(this.transform).position - this.transform.position).magnitude < 7)
                 {

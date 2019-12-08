@@ -12,6 +12,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public event System.Action OnDeath;
 
     public Image healthbar;
+    private Image healthbarBackground;
 
     public GameObject gameController;
 
