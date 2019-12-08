@@ -33,11 +33,7 @@ public class Player : LivingEntity
 
     void Update()
     {
-        if (dead)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
+        if (dead)return;
 
         // Movement input
         Vector3 oldPos = transform.position;

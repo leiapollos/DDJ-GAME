@@ -20,6 +20,11 @@ public class GameController : MonoBehaviour
     public Text scoreText;
     private int score;
 
+    public Text endGameScreen;
+    public Text endGameScreenBackground;
+
+    public AudioManager audio;
+
     List<GameObject> hiddingSpots = new List<GameObject>();
     List<GameObject> zombies = new List<GameObject>();
 
@@ -44,11 +49,6 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.R)) // Restart Scene
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-
         UpdateZombiesList();
         if(player.GetComponent<LivingEntity>().dead == false)
         {
@@ -63,6 +63,7 @@ public class GameController : MonoBehaviour
             scoreText.text = score.ToString();
             scoreTextBackground.text = score.ToString();
         }
+        EndGameScreen();
     }
 
     void UpdateZombiesList()
@@ -112,5 +113,28 @@ public class GameController : MonoBehaviour
             }
         }
         return closest;
+    }
+
+    public void EndGameScreen()
+    {
+        if (!player.GetComponent<Player>().dead) return;
+
+        if (Input.GetKey(KeyCode.R)) // Restart Scene
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        timerText.enabled = false;
+        timerTextBackground.enabled = false;
+        endGameScreen.enabled = true;
+        endGameScreenBackground.enabled = true;
+
+        audio.StopAll();
+
+        foreach (GameObject zombie in zombies)
+        {
+            zombie.GetComponent<Enemy2>().dead = true;
+        }
+
     }
 }

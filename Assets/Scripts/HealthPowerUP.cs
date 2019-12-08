@@ -12,7 +12,7 @@ public class HealthPowerUP : PowerUp
 
     public HealthPowerUP() : base()
     {
-        keyCode = KeyCode.R;
+        keyCode = KeyCode.F;
         name = "Health_PowerUP";
     }
 

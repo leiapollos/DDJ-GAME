@@ -9,6 +9,8 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager instance;
 
+    protected bool gameEnded = false;
+
     void Awake()
     {
         //ADD THIS IF YOU WANT THE THEME TO CONTINUE THROUGH SCENES:
@@ -41,10 +43,12 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         Play("MainTheme");
+        gameEnded = false;
     }
     
     public void Play(string name)
     {
+        if (gameEnded) return;
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if (s == null)
         {
@@ -63,5 +67,14 @@ public class AudioManager : MonoBehaviour
             return;
         }
         if (s.source.isPlaying)s.source.Stop();
+    }
+
+    public void StopAll()
+    {
+        foreach (Sound s in sounds)
+        {
+            s.source.Stop();
+        }
+        gameEnded = true;
     }
 }
