@@ -88,6 +88,8 @@ public class Enemy2 : LivingEntity
     {
         if (dead)
         {
+            if (pathfinder.isOnNavMesh) pathfinder.SetDestination(this.transform.position);
+
             var animInfo = animator.GetCurrentAnimatorStateInfo(0);
             if (animInfo.IsName("Death") && (animInfo.normalizedTime >= 1))
             {
@@ -106,7 +108,7 @@ public class Enemy2 : LivingEntity
             else
             {
                 //Don't move and decrement timeout
-                pathfinder.SetDestination(this.transform.position);
+                if (pathfinder.isOnNavMesh) pathfinder.SetDestination(this.transform.position);
                 staggerTimeout -= Time.deltaTime;
             }
         }
@@ -140,7 +142,7 @@ public class Enemy2 : LivingEntity
 
     IEnumerator Attack()
     {
-
+        this.audioManager.Play("ZombieAttack");
         currentState = State.Attacking;
         pathfinder.enabled = false;
 
@@ -196,7 +198,7 @@ public class Enemy2 : LivingEntity
                 yield return new WaitForSeconds(Mathf.Max(staggerTimeout, 0.0f));
             }
 
-            if (!dead && this.currentState != State.Attacking)
+            if (!dead && this.currentState != State.Attacking && (pathfinder.isOnNavMesh))
             {
                 if (currentState == State.Chasing && (target.position - transform.position).magnitude < ignoreTargetDistance)
                 {

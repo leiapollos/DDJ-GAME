@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -43,6 +44,11 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.R)) // Restart Scene
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
         UpdateZombiesList();
         if(player.GetComponent<LivingEntity>().dead == false)
         {
@@ -98,6 +104,7 @@ public class GameController : MonoBehaviour
         foreach (GameObject zombie in zombies)
         {
             if (zombie == null) continue;
+            if (zombie.GetComponent<Enemy2>().dead) continue;
             if ((zombie.transform.position - civilian.position).magnitude < closestMagnitude)
             {
                 closest = zombie.transform;

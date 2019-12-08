@@ -10,6 +10,12 @@ public class Gun : MonoBehaviour
     public float muzzleVelocity = 35;
 
     protected float nextShotTime;
+    private AudioManager audioManager;
+
+    public void Start()
+    {
+        this.audioManager = GameObject.FindObjectOfType<AudioManager>();
+    }
 
     public void Shoot()
     {

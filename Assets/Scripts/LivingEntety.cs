@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class LivingEntity : MonoBehaviour, IDamageable
 {
+    [HideInInspector]
+    public AudioManager audioManager;
 
     public float startingHealth;
     protected float health;
@@ -20,6 +22,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     {
         health = startingHealth;
         gameController = GameObject.FindGameObjectWithTag("GameController");
+        this.audioManager = GameObject.FindObjectOfType<AudioManager>();
     }
 
     public void TakeHit(float damage, RaycastHit hit)
@@ -59,6 +62,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         if (this.gameObject.tag == "Enemy")
         {
             gameController.GetComponent<GameController>().UpdateScore(1);
+            audioManager.Play("ZombieDeath");
         }
         else if (this.gameObject.tag == "Civilian")
         {

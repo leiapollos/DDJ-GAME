@@ -3,9 +3,10 @@ using UnityEditor;
 
 public class LisboaVivaGun : Gun
 {
+
+
     public new void Shoot()
     {
-
         if (Time.time > nextShotTime)
         {
             nextShotTime = Time.time + msBetweenShots / 1000;

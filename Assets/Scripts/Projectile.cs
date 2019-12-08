@@ -19,6 +19,8 @@ public class Projectile : MonoBehaviour
         {
             OnHitObject(initialCollisions[0]);
         }
+
+        if (gameObject.name.Contains("LisboaVivaCard")) GameObject.FindObjectOfType<AudioManager>().Play("Swoosh");
     }
 
     public void SetSpeed(float newSpeed)
@@ -49,9 +51,10 @@ public class Projectile : MonoBehaviour
     void OnHitObject(RaycastHit hit)
     {
         IDamageable damageableObject = hit.collider.GetComponent<IDamageable>();
-        if (damageableObject != null)
+        if (damageableObject != null && hit.collider.tag != "Player")
         {
             damageableObject.TakeHit(damage, hit);
+
             if (hit.collider.tag == "Enemy")
             {
                 hit.collider.GetComponent<Enemy2>().TriggerStagger();

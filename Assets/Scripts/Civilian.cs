@@ -67,7 +67,12 @@ public class Civilian : LivingEntity
     {
         if (this.dead)
         {
-            Destroy(this.gameObject);
+            pathfinder.SetDestination(this.transform.position);
+            var animInfo = animator.GetCurrentAnimatorStateInfo(0);
+            if (animInfo.IsName("Death") && (animInfo.normalizedTime >= 1))
+            {
+                GameObject.Destroy(this.gameObject);
+            }
             return;
         }
 
@@ -75,6 +80,7 @@ public class Civilian : LivingEntity
         {
             Destroy(this.gameObject);
             GetComponent<LivingEntity>().gameController.GetComponent<GameController>().UpdateScore(3);
+            this.audioManager.Play("Pling");
         }
 
         if ((this.transform.position - hidingSpot).magnitude < 2 ||
@@ -114,7 +120,7 @@ public class Civilian : LivingEntity
                 targetPos = hidingSpot;
                 lastTime = Time.time;
             }
-            else if ((target.position - transform.position).magnitude < ignoreTargetDistance && !targetEntity.dead)
+            else if ((target.position - transform.position).magnitude < ignoreTargetDistance)
             {
                 if ((GetComponent<LivingEntity>().gameController.GetComponent<GameController>().ClosestZombie(this.transform).position - this.transform.position).magnitude < 7)
                 {

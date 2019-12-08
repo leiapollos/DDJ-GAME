@@ -29,7 +29,17 @@ public class VomitPowerUP : PowerUp
 
     protected override void ExecutePowerUp()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            gameObject.GetComponent<Player>().audioManager.Stop("Blargh");
+            gameObject.GetComponent<Player>().audioManager.Play("Blargh");
+        }
+
         if (Time.time - powerUpTime < 5)
+        {
             gun.Shoot();
+        }
+            
+
     }
 }
