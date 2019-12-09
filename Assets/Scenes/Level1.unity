@@ -6943,6 +6943,13 @@ MonoBehaviour:
     source: {fileID: 0}
     loop: 0
     mute: 0
+  - name: Victory
+    clip: {fileID: 8300000, guid: d7b2c9bffc347024f9ccea8c67027a1e, type: 3}
+    volume: 0.8
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+    mute: 0
 --- !u!4 &548986142
 Transform:
   m_ObjectHideFlags: 0
