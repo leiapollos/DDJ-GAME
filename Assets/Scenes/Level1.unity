@@ -8734,7 +8734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10f0076f8772de341a96ecddab969e52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1940148005}
+  target: {fileID: 823015158}
   smoothSpeed: 0.125
   offset: {x: 0, y: 8, z: -4}
 --- !u!1 &670542268
@@ -23512,6 +23512,7 @@ MonoBehaviour:
   scoreText: {fileID: 1687984353}
   endGameScreen: {fileID: 0}
   endGameScreenBackground: {fileID: 0}
+  audio: {fileID: 0}
 --- !u!4 &1598052706
 Transform:
   m_ObjectHideFlags: 0

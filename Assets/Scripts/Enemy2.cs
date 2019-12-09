@@ -37,15 +37,17 @@ public class Enemy2 : LivingEntity
     public float StaggerProbability;
     private float staggerTimeout;
 
+    [HideInInspector]
+    public AudioSource audioSource;
+
     protected override void Start()
     {
         startPos = this.transform.position;
         lastTime = Time.time;
         base.Start();
         pathfinder = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        //skinMaterial = GetComponent<Renderer>().material;
         animator = GetComponent<Animator>();
-        //originalColour = skinMaterial.color;
+        audioSource = GetComponent<AudioSource>();
 
         if (GameObject.FindGameObjectWithTag("Player") != null)
         {
@@ -200,7 +202,7 @@ public class Enemy2 : LivingEntity
 
             if (!dead && this.currentState != State.Attacking && (pathfinder.isOnNavMesh))
             {
-                if (currentState == State.Chasing && (target.position - transform.position).magnitude < ignoreTargetDistance)
+                if (currentState == State.Chasing && target != null && (target.position - transform.position).magnitude < ignoreTargetDistance)
                 {
                     pathfinder.speed = 6f;
                     Vector3 dirToTarget = (target.position - transform.position).normalized;

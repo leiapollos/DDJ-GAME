@@ -57,7 +57,9 @@ public class Projectile : MonoBehaviour
 
             if (hit.collider.tag == "Enemy")
             {
-                hit.collider.GetComponent<Enemy2>().TriggerStagger();
+                var enemy = hit.collider.GetComponent<Enemy2>();
+                enemy.TriggerStagger();
+                enemy.audioSource.Play();
             }
         }
         GameObject.Destroy(gameObject);

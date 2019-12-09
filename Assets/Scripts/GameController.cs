@@ -115,9 +115,20 @@ public class GameController : MonoBehaviour
         return closest;
     }
 
+    public int CountCivilians()
+    {
+        var civilians = GameObject.FindGameObjectsWithTag("Civilian");
+        int count = 0;
+        foreach (GameObject c in civilians)
+        {
+            count++;
+        }
+        return count;
+    }
+
     public void EndGameScreen()
     {
-        if (!player.GetComponent<Player>().dead) return;
+        if (!player.GetComponent<Player>().dead && CountCivilians() > 0) return;
 
         if (Input.GetKey(KeyCode.R)) // Restart Scene
         {
