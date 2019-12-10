@@ -6950,6 +6950,13 @@ MonoBehaviour:
     source: {fileID: 0}
     loop: 0
     mute: 0
+  - name: Loss
+    clip: {fileID: 8300000, guid: 5371fcfa46cecca419397f76183123fb, type: 3}
+    volume: 0.8
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+    mute: 0
 --- !u!4 &548986142
 Transform:
   m_ObjectHideFlags: 0

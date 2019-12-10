@@ -59,7 +59,7 @@ public class Projectile : MonoBehaviour
             {
                 var enemy = hit.collider.GetComponent<Enemy2>();
                 enemy.TriggerStagger();
-                enemy.audioSource.Play();
+                if (this.name.Contains("LisboaVivaCard")) enemy.audioSource.Play();
             }
         }
         GameObject.Destroy(gameObject);

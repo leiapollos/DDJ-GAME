@@ -128,7 +128,8 @@ public class GameController : MonoBehaviour
 
     public void EndGameScreen()
     {
-        if (!player.GetComponent<Player>().dead && CountCivilians() > 0) return;
+        var ded = player.GetComponent<Player>().dead;
+        if (!ded && CountCivilians() > 0) return;
 
         if (Input.GetKey(KeyCode.R)) // Restart Scene
         {
@@ -143,7 +144,8 @@ public class GameController : MonoBehaviour
         if (audio.IsPlaying("MainTheme"))
         {
             audio.StopAll();
-            audio.Play("Victory");
+            if (!ded) audio.Play("Victory");
+            else audio.Play("Loss");
         }
 
         player.GetComponent<Player>().enabled = false;
