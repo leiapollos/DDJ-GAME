@@ -81,7 +81,7 @@ public class Player : LivingEntity
     {
         if (col.gameObject.tag == "Subway")
         {
-            Debug.Log("Sub");
+
             Physics.IgnoreCollision(col.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
         foreach (var p in powerUps)

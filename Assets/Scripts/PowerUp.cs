@@ -9,6 +9,7 @@ public class PowerUp : MonoBehaviour
     protected KeyCode keyCode;
     public Image keyImage;
     public string name;
+    public Text press;
 
     public PowerUp()
     {
@@ -39,6 +40,7 @@ public class PowerUp : MonoBehaviour
     public void Aquire()
     {
         keyImage.enabled = true;
+        press.enabled = true;
         aquired = true;
     }
 
@@ -56,6 +58,7 @@ public class PowerUp : MonoBehaviour
     {
         aquired = false;
         ImageToggle(false);
+        press.enabled = false;
     }
 
     protected void ImageToggle(bool state)
