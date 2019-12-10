@@ -140,7 +140,13 @@ public class GameController : MonoBehaviour
         endGameScreen.enabled = true;
         endGameScreenBackground.enabled = true;
 
-        audio.StopAll();
+        if (audio.IsPlaying("MainTheme"))
+        {
+            audio.StopAll();
+            audio.Play("Victory");
+        }
+
+        player.GetComponent<Player>().enabled = false;
 
         foreach (GameObject zombie in zombies)
         {
