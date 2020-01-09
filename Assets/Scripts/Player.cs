@@ -19,12 +19,7 @@ public class Player : LivingEntity
 
     public bool shooting = false;
 
-    Vector3 finalPos;
-
     Animator animator;
-
-    public Text text1;
-    public Text text2;
 
     public bool canMove = false;
 
@@ -36,8 +31,6 @@ public class Player : LivingEntity
         animator = GetComponent<Animator>();
         viewCamera = Camera.main;
         currentState = State.Idle;
-        GameObject finalPosObject = GameObject.FindGameObjectWithTag("FinalPos");
-        finalPos = finalPosObject.transform.position;
 
     }
 
@@ -87,29 +80,6 @@ public class Player : LivingEntity
         }
         updateAnimation();
         }
-
-        if ((this.transform.position - finalPos).magnitude < 1)
-        {
-            //Destroy(this.gameObject);
-         
-            text1.enabled = true;
-            text2.enabled = true;
-
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                Debug.Log("SAIR");
-                this.audioManager.Play("Pling");
-            }
-
-            //GetComponent<LivingEntity>().gameController.GetComponent<GameController>().UpdateScore(20);
-
-        }
-        else
-        {
-            text1.enabled = false;
-            text2.enabled = false;
-        }
-
     
 
     }

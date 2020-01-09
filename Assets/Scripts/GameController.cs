@@ -34,16 +34,19 @@ public class GameController : MonoBehaviour
 
     public GameObject subway;
 
-    int next;
-
     Vector3 dir;
 
     bool first = true;
 
+    public Text text1;
+    public Text text2;
+
+    public Light playerLight;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerLight.intensity = 1;
         score = 0;
         GameObject[] hiddingSpotsArray = GameObject.FindGameObjectsWithTag("Hidding Spot");
         for(int i = 0; i < hiddingSpotsArray.Length; i++)
@@ -56,8 +59,7 @@ public class GameController : MonoBehaviour
             zombies.Add(zombiesArray[i]);
         }
 
-        next = 1;
-        dir = (target[next].transform.position - subway.transform.position).normalized;
+        dir = (target[1].transform.position - subway.transform.position).normalized;
         
         timerText.text = "0:0,00";
         timerTextBackground.text = "0:0,00";
@@ -73,7 +75,8 @@ public class GameController : MonoBehaviour
         UpdateZombiesList();
         if(player.GetComponent<LivingEntity>().dead == false)
         {
-            if ((target[next].position - subway.transform.position).magnitude > 0.05)
+            // GO TO STATION
+            if ((target[1].transform.position - subway.transform.position).magnitude > 0.1)
             {
                 moveObject(dir);
                 freezeZombies();
@@ -87,7 +90,11 @@ public class GameController : MonoBehaviour
                     first = false;
                 }
 
+                playerLight.intensity = 6;
                 player.GetComponent<Player>().canMove = true;
+
+                //RUN THE GAME NORMALLY
+
 
                 //Change time
                 t = Time.time - startTime;
@@ -99,6 +106,40 @@ public class GameController : MonoBehaviour
                 //Change score
                 scoreText.text = score.ToString();
                 scoreTextBackground.text = score.ToString();
+
+                if ((player.transform.position - target[1].transform.position).magnitude < 1)
+                {
+                    //Destroy(this.gameObject);
+
+                    text1.enabled = true;
+                    text2.enabled = true;
+
+                    if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                    {
+                        playerLight.intensity = 1;
+                        dir = (target[0].transform.position - subway.transform.position).normalized;
+                        player.GetComponent<Player>().canMove = false;
+                        Quaternion rotation = Quaternion.LookRotation(target[0].transform.position - subway.transform.position, Vector3.up);
+                        player.transform.rotation = rotation;
+                        if ((target[0].transform.position - subway.transform.position).magnitude > 0.1)
+                        {
+                            moveObject(dir);
+                            freezeZombies();
+                        }
+                        text1.enabled = false;
+                        text2.enabled = false;
+                    }
+
+                    //GetComponent<LivingEntity>().gameController.GetComponent<GameController>().UpdateScore(20);
+
+                }
+                else
+                {
+                    text1.enabled = false;
+                    text2.enabled = false;
+                }
+
+
             }
         }
         EndGameScreen();
@@ -108,8 +149,10 @@ public class GameController : MonoBehaviour
     void moveObject(Vector3 direction)
     {
         subway.transform.Translate(direction * speed * Time.deltaTime);
-        player.transform.Translate(direction * speed * Time.deltaTime);
-
+        if(first==false)
+            player.transform.Translate(-direction * speed * Time.deltaTime);
+        else
+            player.transform.Translate(direction * speed * Time.deltaTime);
     }
 
 
