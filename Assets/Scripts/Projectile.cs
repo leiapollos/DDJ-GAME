@@ -20,7 +20,10 @@ public class Projectile : MonoBehaviour
             OnHitObject(initialCollisions[0]);
         }
 
-        if (gameObject.name.Contains("LisboaVivaCard")) GameObject.FindObjectOfType<AudioManager>().Play("Swoosh");
+        if (gameObject.name.Contains("LisboaVivaCard"))
+        {
+            GameObject.FindObjectOfType<AudioManager>().PlayVaried("Swoosh");
+        }
     }
 
     public void SetSpeed(float newSpeed)

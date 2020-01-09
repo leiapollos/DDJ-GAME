@@ -65,6 +65,7 @@ public class Civilian : LivingEntity
 
     protected void Update()
     {
+
         if (this.dead)
         {
             pathfinder.SetDestination(this.transform.position);
@@ -79,7 +80,9 @@ public class Civilian : LivingEntity
         if ((this.transform.position - finalPos).magnitude < 1)
         {
             Destroy(this.gameObject);
+
             GetComponent<LivingEntity>().gameController.GetComponent<GameController>().UpdateScore(20);
+
             this.audioManager.Play("Pling");
         }
 

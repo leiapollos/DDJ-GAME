@@ -164,7 +164,7 @@ public class Enemy2 : LivingEntity
             if (currentState == State.Staggered)
             {
                 percent = 1;
-                continue;
+                break;
             }
 
             currentState = State.Attacking;
