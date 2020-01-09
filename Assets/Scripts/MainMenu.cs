@@ -2,15 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    public void PlayGame()
+
+    public GameObject loadingScreen;
+    public Slider slider;
+    public Text LoadingTextBackground;
+    public Text LoadingText;
+
+
+    public void LoadLevel()
+    {
+        StartCoroutine(LoadAsynchronously());
+
+    }
+
+    IEnumerator LoadAsynchronously()
+    {
+        Debug.Log("ola");
+        AsyncOperation operation = SceneManager.LoadSceneAsync("Level1");
+
+        loadingScreen.SetActive(true);
+
+        while (!operation.isDone)
         {
+            float progress = Mathf.Clamp01(operation.progress / 0.9f);
 
-        SceneManager.LoadScene("Level1");
+            slider.value = progress;
+            LoadingText.text = ((int)(progress * 100)).ToString() + "%";
+            LoadingTextBackground.text = ((int)(progress * 100)).ToString() + "%";
 
+            yield return null;
         }
+    }
 
     public void QuitGame()
     {
