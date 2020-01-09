@@ -10,6 +10,7 @@
 /[Ll]ogs/
 /[Mm]emoryCaptures/
 /[Rr]elease/
+/Zombies_on_the_10-15_to_Alameda/
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
