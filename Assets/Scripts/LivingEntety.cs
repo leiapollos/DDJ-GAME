@@ -46,10 +46,10 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public void AddHealth(int ammount)
     {
-        Debug.Log(health);
+       // Debug.Log(health);
         health =  health + ammount > startingHealth? startingHealth : health + ammount;
         healthbar.fillAmount = health / startingHealth;
-        Debug.Log(health);
+        //Debug.Log(health);
     }
 
     protected void Die()
@@ -66,7 +66,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         }
         else if (this.gameObject.tag == "Civilian")
         {
-            gameController.GetComponent<GameController>().UpdateScore(-5);
+            gameController.GetComponent<GameController>().UpdateScore(-10);
         }
 
         var animator = gameObject.GetComponent<Animator>();

@@ -79,7 +79,7 @@ public class Civilian : LivingEntity
         if ((this.transform.position - finalPos).magnitude < 1)
         {
             Destroy(this.gameObject);
-            GetComponent<LivingEntity>().gameController.GetComponent<GameController>().UpdateScore(3);
+            GetComponent<LivingEntity>().gameController.GetComponent<GameController>().UpdateScore(20);
             this.audioManager.Play("Pling");
         }
 
