@@ -25,13 +25,25 @@ public class GameController : MonoBehaviour
 
     public AudioManager audio;
 
+
     List<GameObject> hiddingSpots = new List<GameObject>();
     List<GameObject> zombies = new List<GameObject>();
+
+    public Transform[] target;
+    public float speed;
+
+    public GameObject subway;
+
+    int next;
+
+    Vector3 dir;
+
+    bool first = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        startTime = Time.time;
+        
         score = 0;
         GameObject[] hiddingSpotsArray = GameObject.FindGameObjectsWithTag("Hidding Spot");
         for(int i = 0; i < hiddingSpotsArray.Length; i++)
@@ -44,6 +56,15 @@ public class GameController : MonoBehaviour
             zombies.Add(zombiesArray[i]);
         }
 
+        next = 1;
+        dir = (target[next].transform.position - subway.transform.position).normalized;
+        
+        timerText.text = "0:0,00";
+        timerTextBackground.text = "0:0,00";
+
+        scoreText.text = "0";
+        scoreTextBackground.text = "0";
+        freezeZombies();
     }
 
     // Update is called once per frame
@@ -52,19 +73,45 @@ public class GameController : MonoBehaviour
         UpdateZombiesList();
         if(player.GetComponent<LivingEntity>().dead == false)
         {
-            //Change time
-            t = Time.time - startTime;
-            minutes = ((int)t / 60).ToString();
-            seconds = (t % 60).ToString("f2");
-            timerText.text = minutes + ":" + seconds;
-            timerTextBackground.text = minutes + ":" + seconds;
+            if ((target[next].position - subway.transform.position).magnitude > 0.05)
+            {
+                moveObject(dir);
+                freezeZombies();
+            }
+            else
+            {
+                if (first == true)
+                {
+                    startTime = Time.time;
+                    unfreezeZombies();
+                    first = false;
+                }
 
-            //Change score
-            scoreText.text = score.ToString();
-            scoreTextBackground.text = score.ToString();
+                player.GetComponent<Player>().canMove = true;
+
+                //Change time
+                t = Time.time - startTime;
+                minutes = ((int)t / 60).ToString();
+                seconds = (t % 60).ToString("f2");
+                timerText.text = minutes + ":" + seconds;
+                timerTextBackground.text = minutes + ":" + seconds;
+
+                //Change score
+                scoreText.text = score.ToString();
+                scoreTextBackground.text = score.ToString();
+            }
         }
         EndGameScreen();
     }
+
+
+    void moveObject(Vector3 direction)
+    {
+        subway.transform.Translate(direction * speed * Time.deltaTime);
+        player.transform.Translate(direction * speed * Time.deltaTime);
+
+    }
+
 
     void UpdateZombiesList()
     {
@@ -73,6 +120,22 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < zombiesArray.Length; i++)
         {
                 zombies.Add(zombiesArray[i]);
+        }
+    }
+
+    void freezeZombies()
+    {
+        foreach(GameObject z in zombies)
+        {
+            z.GetComponent<Enemy2>().pathfinder.speed = 0f;
+        }
+    }
+
+    void unfreezeZombies()
+    {
+        foreach (GameObject z in zombies)
+        {
+            z.GetComponent<Enemy2>().pathfinder.speed = 3.5f;
         }
     }
 

@@ -42,7 +42,7 @@ public class Civilian : LivingEntity
         animator = GetComponent<Animator>();
         //originalColour = skinMaterial.color;       
         hidingSpot = GetComponent<LivingEntity>().gameController.GetComponent<GameController>().ClosestHiddingSpot(this.transform).position;
-        GameObject finalPosObject = GameObject.FindGameObjectWithTag("Subway");
+        GameObject finalPosObject = GameObject.FindGameObjectWithTag("FinalPos");
         finalPos = finalPosObject.transform.position;
 
         if (GameObject.FindGameObjectWithTag("Player") != null)

@@ -26,6 +26,8 @@ public class Player : LivingEntity
     public Text text1;
     public Text text2;
 
+    public bool canMove = false;
+
     protected override void Start()
     {
         base.Start();
@@ -34,7 +36,7 @@ public class Player : LivingEntity
         animator = GetComponent<Animator>();
         viewCamera = Camera.main;
         currentState = State.Idle;
-        GameObject finalPosObject = GameObject.FindGameObjectWithTag("Subway");
+        GameObject finalPosObject = GameObject.FindGameObjectWithTag("FinalPos");
         finalPos = finalPosObject.transform.position;
 
     }
@@ -63,6 +65,8 @@ public class Player : LivingEntity
         Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
         float rayDistance;
+        if(canMove == true)
+        {
 
         if (groundPlane.Raycast(ray, out rayDistance))
         {
@@ -82,6 +86,7 @@ public class Player : LivingEntity
             shooting = false;
         }
         updateAnimation();
+        }
 
         if ((this.transform.position - finalPos).magnitude < 1)
         {

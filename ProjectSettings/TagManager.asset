@@ -12,6 +12,7 @@ TagManager:
   - Bullet
   - Vommit_PowerUP
   - Health_PowerUP
+  - FinalPos
   layers:
   - Default
   - TransparentFX

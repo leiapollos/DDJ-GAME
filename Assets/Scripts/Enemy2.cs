@@ -8,7 +8,7 @@ public class Enemy2 : LivingEntity
     public enum State { Idle, Chasing, Attacking, Staggered };
     State currentState;
 
-    UnityEngine.AI.NavMeshAgent pathfinder;
+    public UnityEngine.AI.NavMeshAgent pathfinder;
     Transform target;
     LivingEntity targetEntity;
     Material skinMaterial;
