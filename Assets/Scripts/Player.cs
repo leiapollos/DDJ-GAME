@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(GunController))]
@@ -18,8 +19,12 @@ public class Player : LivingEntity
 
     public bool shooting = false;
 
+    Vector3 finalPos;
+
     Animator animator;
 
+    public Text text1;
+    public Text text2;
 
     protected override void Start()
     {
@@ -29,6 +34,9 @@ public class Player : LivingEntity
         animator = GetComponent<Animator>();
         viewCamera = Camera.main;
         currentState = State.Idle;
+        GameObject finalPosObject = GameObject.FindGameObjectWithTag("Subway");
+        finalPos = finalPosObject.transform.position;
+
     }
 
     void Update()
@@ -74,6 +82,31 @@ public class Player : LivingEntity
             shooting = false;
         }
         updateAnimation();
+
+        if ((this.transform.position - finalPos).magnitude < 1)
+        {
+            //Destroy(this.gameObject);
+         
+            text1.enabled = true;
+            text2.enabled = true;
+
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                Debug.Log("SAIR");
+                this.audioManager.Play("Pling");
+            }
+
+            //GetComponent<LivingEntity>().gameController.GetComponent<GameController>().UpdateScore(20);
+
+        }
+        else
+        {
+            text1.enabled = false;
+            text2.enabled = false;
+        }
+
+    
+
     }
 
 
