@@ -43,6 +43,19 @@ public class GameController : MonoBehaviour
 
     public Light playerLight;
 
+    public GameObject loadingScreen;
+    public Slider slider;
+    public Text LoadingTextBackground;
+    public Text LoadingText;
+
+    public GameObject endGameScreenUI;
+    public Text endGameScoreTextBackground;
+    public Text endgameScoreText;
+
+    public GameObject deathScreenUI;
+    public Text deathScoreTextBackground;
+    public Text deathScoreText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -128,6 +141,9 @@ public class GameController : MonoBehaviour
                         }
                         text1.enabled = false;
                         text2.enabled = false;
+
+                        StartCoroutine(WaitEndGameScreen());
+                       
                     }
 
                     //GetComponent<LivingEntity>().gameController.GetComponent<GameController>().UpdateScore(20);
@@ -142,7 +158,10 @@ public class GameController : MonoBehaviour
 
             }
         }
-        EndGameScreen();
+        else
+        {
+            StartCoroutine(WaitDeathScreen());
+        }
     }
 
 
@@ -232,34 +251,103 @@ public class GameController : MonoBehaviour
         return count;
     }
 
-    public void EndGameScreen()
+    public void DeathScreen()
     {
         var ded = player.GetComponent<Player>().dead;
         if (!ded && CountCivilians() > 0) return;
 
-        if (Input.GetKey(KeyCode.R)) // Restart Scene
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
+        //if (Input.GetKey(KeyCode.R)) // Restart Scene
+        //{
+        //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //}
 
-        timerText.enabled = false;
-        timerTextBackground.enabled = false;
-        endGameScreen.enabled = true;
-        endGameScreenBackground.enabled = true;
+        //timerText.enabled = false;
+        //timerTextBackground.enabled = false;
+        //endGameScreen.enabled = true;
+        //endGameScreenBackground.enabled = true;
 
-        if (audio.IsPlaying("MainTheme"))
-        {
-            audio.StopAll();
-            if (!ded) audio.Play("Victory");
-            else audio.Play("Loss");
-        }
 
-        player.GetComponent<Player>().enabled = false;
+        //audio.StopAll();
+        //audio.Play("Loss");
 
-        foreach (GameObject zombie in zombies)
-        {
-            zombie.GetComponent<Enemy2>().dead = true;
-        }
+
+        //player.GetComponent<Player>().enabled = false;
+
+        //foreach (GameObject zombie in zombies)
+        //{
+        //    zombie.GetComponent<Enemy2>().dead = true;
+        //}
+
+
+
+        deathScoreText.text = score.ToString();
+        deathScoreTextBackground.text = score.ToString();
+        deathScreenUI.SetActive(true);
 
     }
+
+    IEnumerator WaitDeathScreen()
+    {
+        audio.StopAll();
+        yield return new WaitForSeconds(0.5f);
+        audio.Play("Loss");
+        DeathScreen();
+    }
+
+    IEnumerator WaitEndGameScreen()
+    {
+        yield return new WaitForSeconds(3f);
+        EndGameScreen();
+    }
+
+    void EndGameScreen()
+    {
+        audio.StopAll();
+        audio.Play("Victory");
+        endgameScoreText.text = score.ToString();
+        endGameScoreTextBackground.text = score.ToString();
+        endGameScreenUI.SetActive(true);
+    }
+
+    public void TryAgain()
+    {
+        StartCoroutine(LoadAsynchronously(SceneManager.GetActiveScene().name));
+    }
+
+    public void NextLevel()
+    {
+        StartCoroutine(LoadAsynchronously("Level2"));
+    }
+
+    public void Menu()
+    {
+        StartCoroutine(LoadAsynchronously("StartMenu"));
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    IEnumerator LoadAsynchronously(string sceneName)
+    {
+       // yield return new WaitForSeconds(3f);
+
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+
+        loadingScreen.SetActive(true);
+
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / 0.9f);
+
+            slider.value = progress;
+            LoadingText.text = ((int)(progress * 100)).ToString() + "%";
+            LoadingTextBackground.text = ((int)(progress * 100)).ToString() + "%";
+
+            yield return null;
+        }
+    }
+
+
 }
