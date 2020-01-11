@@ -204,7 +204,7 @@ public class Enemy2 : LivingEntity
             {
                 if (currentState == State.Chasing && target != null && (target.position - transform.position).magnitude < ignoreTargetDistance)
                 {
-                    pathfinder.speed = 6f;
+                    pathfinder.speed = 8f;
                     Vector3 dirToTarget = (target.position - transform.position).normalized;
                     Vector3 targetPosition = target.position - dirToTarget * (myCollisionRadius + targetCollisionRadius + attackDistanceThreshold / 2);
                     pathfinder.SetDestination(targetPosition);

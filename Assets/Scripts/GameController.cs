@@ -8,6 +8,9 @@ public class GameController : MonoBehaviour
 {
     public GameObject player;
 
+    public GameObject minimapUI;
+
+    public GameObject timerUI;
     public Text timerTextBackground;
     public Text timerText;
     private float startTime;
@@ -16,12 +19,11 @@ public class GameController : MonoBehaviour
     string minutes;
     string seconds;
 
+    public GameObject scoreUI;
     public Text scoreTextBackground;
     public Text scoreText;
     private int score;
 
-    public Text endGameScreen;
-    public Text endGameScreenBackground;
 
     public AudioManager audio;
 
@@ -89,22 +91,25 @@ public class GameController : MonoBehaviour
         if(player.GetComponent<LivingEntity>().dead == false)
         {
             // GO TO STATION
-            if ((target[1].transform.position - subway.transform.position).magnitude > 0.1)
+            if ((target[1].transform.position - subway.transform.position).magnitude > 0.5)
             {
                 moveObject(dir);
                 freezeZombies();
             }
             else
             {
-                if (first == true)
+                while (first == true)
                 {
                     startTime = Time.time;
                     unfreezeZombies();
+                    playerLight.intensity = 6;
+                    player.GetComponent<Player>().canMove = true;
+                    timerUI.SetActive(true);
+                    minimapUI.SetActive(true);
+                    scoreUI.SetActive(true);
                     first = false;
                 }
 
-                playerLight.intensity = 6;
-                player.GetComponent<Player>().canMove = true;
 
                 //RUN THE GAME NORMALLY
 
