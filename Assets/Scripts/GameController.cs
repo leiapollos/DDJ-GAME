@@ -135,6 +135,9 @@ public class GameController : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
                     {
                         playerLight.intensity = 1;
+                        timerUI.SetActive(false);
+                        minimapUI.SetActive(false);
+                        scoreUI.SetActive(false);
                         dir = (target[0].transform.position - subway.transform.position).normalized;
                         player.GetComponent<Player>().canMove = false;
                         Quaternion rotation = Quaternion.LookRotation(target[0].transform.position - subway.transform.position, Vector3.up);
@@ -321,7 +324,14 @@ public class GameController : MonoBehaviour
 
     public void NextLevel()
     {
-        StartCoroutine(LoadAsynchronously("Level2"));
+        if (SceneManager.GetActiveScene().name.Equals("Level1"))
+        {
+            StartCoroutine(LoadAsynchronously("Level2"));
+        }
+        else if (SceneManager.GetActiveScene().name.Equals("Level2"))
+        {
+            StartCoroutine(LoadAsynchronously("StartMenu"));
+        }
     }
 
     public void Menu()
