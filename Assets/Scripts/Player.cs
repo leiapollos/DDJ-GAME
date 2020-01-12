@@ -14,7 +14,7 @@ public class Player : LivingEntity
 
     Camera viewCamera;
     PlayerController controller;
-    GunController gunController;
+    protected GunController gunController;
     public List<PowerUp> powerUps;
 
     public bool shooting = false;
