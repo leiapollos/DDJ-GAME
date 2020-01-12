@@ -101,6 +101,11 @@ public class Player : LivingEntity
                 break;
             }
         }
+        if(col.gameObject.tag == "Weapon_PowerUp")
+        {
+            gunController.equippedGun.msBetweenShots = 110;
+            Destroy(col.gameObject);
+        }
     }
 
 

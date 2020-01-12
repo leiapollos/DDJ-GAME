@@ -6,11 +6,12 @@ public class Gun : MonoBehaviour
 
     public Transform muzzle;
     public Projectile projectile;
-    public float msBetweenShots = 100;
+    public float msBetweenShots;
     public float muzzleVelocity = 35;
 
     protected float nextShotTime;
     private AudioManager audioManager;
+    public int number_of_bullets = 10;
 
     public void Start()
     {
@@ -25,5 +26,10 @@ public class Gun : MonoBehaviour
             Projectile newProjectile = Instantiate(projectile, muzzle.position, muzzle.rotation) as Projectile;
             newProjectile.SetSpeed(muzzleVelocity);
         }
+    }
+
+    IEnumerator waitForShot()
+    {
+        yield return new WaitForSeconds(1f);
     }
 }

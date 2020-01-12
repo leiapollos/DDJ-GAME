@@ -13,6 +13,7 @@ TagManager:
   - Vommit_PowerUP
   - Health_PowerUP
   - FinalPos
+  - Weapon_PowerUp
   layers:
   - Default
   - TransparentFX
