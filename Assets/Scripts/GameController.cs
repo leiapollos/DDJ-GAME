@@ -111,6 +111,7 @@ public class GameController : MonoBehaviour
                     //minimapUI.SetActive(true);
                     //scoreUI.SetActive(true);
                     first = false;
+                    RegulateZombieSpawnTime();
                 }
 
 
@@ -142,6 +143,7 @@ public class GameController : MonoBehaviour
                         //timerUI.SetActive(false);
                         //minimapUI.SetActive(false);
                         //scoreUI.SetActive(false);
+                        RegulateScore(((int)t / 60), (t % 60));
                         dir = (target[0].transform.position - subway.transform.position).normalized;
                         player.GetComponent<Player>().canMove = false;
                         Quaternion rotation = Quaternion.LookRotation(target[0].transform.position - subway.transform.position, Vector3.up);
@@ -176,6 +178,14 @@ public class GameController : MonoBehaviour
         }
     }
 
+
+    void RegulateScore(int minutes, float seconds)
+    {
+        if(seconds >= 30)
+            score = score + 5*(minutes) + 5;
+        else
+            score = score + 5 * (minutes);
+    }
 
     void moveObject(Vector3 direction)
     {
@@ -368,5 +378,14 @@ public class GameController : MonoBehaviour
         }
     }
 
+    void RegulateZombieSpawnTime()
+    {
+        GameObject[] zombieSpawners = GameObject.FindGameObjectsWithTag("ZombieSpawner");
+
+        foreach(GameObject zS in zombieSpawners)
+        {
+            zS.GetComponent<Spawner2>().Regulate_time();
+        }
+    }
 
 }

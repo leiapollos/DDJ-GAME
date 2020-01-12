@@ -13,7 +13,6 @@ public class Grenade : Projectile
 
     public override void OnHitObject(RaycastHit hit)
     {
-        Debug.Log(hit.collider.gameObject.name);
         IDamageable damageableObject = hit.collider.GetComponent<IDamageable>();
         if (damageableObject != null && hit.collider.tag != "Player")
         {

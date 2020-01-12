@@ -86,7 +86,7 @@ public class Civilian : LivingEntity
             this.audioManager.Play("Pling");
         }
 
-        if ((this.transform.position - hidingSpot).magnitude < 2 ||
+        if ((this.transform.position - hidingSpot).magnitude < 4 ||
                     ((GetComponent<LivingEntity>().gameController.GetComponent<GameController>().ClosestZombie(this.transform).position - this.transform.position).magnitude > 7 && Time.time - lastTime > 1.5f))
         {
             hide = false;

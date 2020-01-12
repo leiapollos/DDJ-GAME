@@ -14,6 +14,7 @@ TagManager:
   - Health_PowerUP
   - FinalPos
   - Weapon_PowerUp
+  - ZombieSpawner
   layers:
   - Default
   - TransparentFX

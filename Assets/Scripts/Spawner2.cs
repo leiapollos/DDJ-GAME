@@ -20,8 +20,6 @@ public class Spawner2 : MonoBehaviour
 
     public void Start()
     {
-        lastWaveTime = Time.time;
-        lastTime = Time.time;
         for (int i = 0; i < maxNumberOfZombies; i++)
         {
             x = Random.Range(this.transform.position.x - range, this.transform.position.x + range);
@@ -37,16 +35,22 @@ public class Spawner2 : MonoBehaviour
     {
         if (Time.time - lastWaveTime > newWaveTimeInterval)
         {
-           // Debug.Log(Time.time);
-            maxNumberOfZombies = maxNumberOfZombies + Mathf.RoundToInt(maxNumberOfZombies / 2);
+            // Debug.Log(Time.time);
+            maxNumberOfZombies = maxNumberOfZombies + 1;    //Mathf.RoundToInt(maxNumberOfZombies / 2);
             lastWaveTime = Time.time;
+        }
+
+        for (int i = 0; i < currentZombies.Count; i++)
+        {
+            if (currentZombies[i] == null)
+                currentZombies.RemoveAt(i);
         }
 
         if (Time.time - lastTime > timeInterval && currentZombies.Count < maxNumberOfZombies)
         {
             //while (currentZombies.Count < maxNumberOfZombies)
             //{
-            for (int i = 0; i < maxNumberOfZombies; i++)
+            for (int i = currentZombies.Count; i < maxNumberOfZombies; i++)
             {
                 x = Random.Range(this.transform.position.x - range, this.transform.position.x + range);
                 z = Random.Range(this.transform.position.z - range, this.transform.position.z + range);
@@ -58,11 +62,13 @@ public class Spawner2 : MonoBehaviour
                 lastTime = Time.time;
         
         }
-        for (int i = 0; i < currentZombies.Count; i++)
-        {
-            if (currentZombies[i] == null)
-                currentZombies.RemoveAt(i);
-        }
+
+    }
+
+    public void Regulate_time()
+    {
+        lastWaveTime = Time.time;
+        lastTime = Time.time;
     }
 
 }
