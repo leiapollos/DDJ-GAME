@@ -8,6 +8,11 @@ public class GameController : MonoBehaviour
 {
     public GameObject player;
 
+    public GameObject gameUI;
+
+    //public GameObject minimapUI;
+
+    //public GameObject timerUI;
     public Text timerTextBackground;
     public Text timerText;
     private float startTime;
@@ -16,12 +21,11 @@ public class GameController : MonoBehaviour
     string minutes;
     string seconds;
 
+    //public GameObject scoreUI;
     public Text scoreTextBackground;
     public Text scoreText;
     private int score;
 
-    public Text endGameScreen;
-    public Text endGameScreenBackground;
 
     public AudioManager audio;
 
@@ -89,22 +93,26 @@ public class GameController : MonoBehaviour
         if(player.GetComponent<LivingEntity>().dead == false)
         {
             // GO TO STATION
-            if ((target[1].transform.position - subway.transform.position).magnitude > 0.1)
+            if ((target[1].transform.position - subway.transform.position).magnitude > 0.5)
             {
                 moveObject(dir);
                 freezeZombies();
             }
             else
             {
-                if (first == true)
+                while (first == true)
                 {
                     startTime = Time.time;
                     unfreezeZombies();
+                    playerLight.intensity = 6;
+                    player.GetComponent<Player>().canMove = true;
+                    gameUI.SetActive(true);
+                    //timerUI.SetActive(true);
+                    //minimapUI.SetActive(true);
+                    //scoreUI.SetActive(true);
                     first = false;
                 }
 
-                playerLight.intensity = 6;
-                player.GetComponent<Player>().canMove = true;
 
                 //RUN THE GAME NORMALLY
 
@@ -130,6 +138,10 @@ public class GameController : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
                     {
                         playerLight.intensity = 1;
+                        gameUI.SetActive(false);
+                        //timerUI.SetActive(false);
+                        //minimapUI.SetActive(false);
+                        //scoreUI.SetActive(false);
                         dir = (target[0].transform.position - subway.transform.position).normalized;
                         player.GetComponent<Player>().canMove = false;
                         Quaternion rotation = Quaternion.LookRotation(target[0].transform.position - subway.transform.position, Vector3.up);
@@ -316,7 +328,14 @@ public class GameController : MonoBehaviour
 
     public void NextLevel()
     {
-        StartCoroutine(LoadAsynchronously("Level2"));
+        if (SceneManager.GetActiveScene().name.Equals("Level1"))
+        {
+            StartCoroutine(LoadAsynchronously("Level2"));
+        }
+        else if (SceneManager.GetActiveScene().name.Equals("Level2"))
+        {
+            StartCoroutine(LoadAsynchronously("StartMenu"));
+        }
     }
 
     public void Menu()
