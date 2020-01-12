@@ -18,6 +18,7 @@ public class Player : LivingEntity
     public List<PowerUp> powerUps;
 
     public bool shooting = false;
+    public bool shootingGrenade = false;
 
     Animator animator;
 
@@ -78,7 +79,16 @@ public class Player : LivingEntity
         {
             shooting = false;
         }
-        updateAnimation();
+        if (Input.GetKey(KeyCode.Q))
+        {
+            shootingGrenade = true;
+            gunController.Grenade();
+        }
+        else
+        {
+            shootingGrenade = false;
+        }
+            updateAnimation();
         }
     
 

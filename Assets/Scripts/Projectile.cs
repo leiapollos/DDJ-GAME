@@ -4,11 +4,11 @@ using System.Collections;
 public class Projectile : MonoBehaviour
 {
     public LayerMask collisionMask;
-    float speed = 10;
-    float damage = 1;
+    protected float speed = 10;
+    protected float damage = 1;
 
     public float lifetime = 3;
-    float skinWidth = .1f;
+    protected float skinWidth = .1f;
 
     void Start()
     {
@@ -51,7 +51,7 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    void OnHitObject(RaycastHit hit)
+    public virtual void OnHitObject(RaycastHit hit)
     {
         IDamageable damageableObject = hit.collider.GetComponent<IDamageable>();
         if (damageableObject != null && hit.collider.tag != "Player")

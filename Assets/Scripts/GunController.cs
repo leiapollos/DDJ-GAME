@@ -6,6 +6,7 @@ public class GunController : MonoBehaviour
 
     public Transform weaponHold;
     public Gun startingGun;
+    public Gun grenade;
     Gun equippedGun;
 
     void Start()
@@ -31,6 +32,14 @@ public class GunController : MonoBehaviour
         if (equippedGun != null)
         {
             equippedGun.Shoot();
+        }
+    }
+
+    public void Grenade()
+    {
+        if (grenade != null)
+        {
+            grenade.Shoot();
         }
     }
 }
