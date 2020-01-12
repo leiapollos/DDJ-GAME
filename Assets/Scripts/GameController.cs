@@ -8,9 +8,11 @@ public class GameController : MonoBehaviour
 {
     public GameObject player;
 
-    public GameObject minimapUI;
+    public GameObject gameUI;
 
-    public GameObject timerUI;
+    //public GameObject minimapUI;
+
+    //public GameObject timerUI;
     public Text timerTextBackground;
     public Text timerText;
     private float startTime;
@@ -19,7 +21,7 @@ public class GameController : MonoBehaviour
     string minutes;
     string seconds;
 
-    public GameObject scoreUI;
+    //public GameObject scoreUI;
     public Text scoreTextBackground;
     public Text scoreText;
     private int score;
@@ -104,9 +106,10 @@ public class GameController : MonoBehaviour
                     unfreezeZombies();
                     playerLight.intensity = 6;
                     player.GetComponent<Player>().canMove = true;
-                    timerUI.SetActive(true);
-                    minimapUI.SetActive(true);
-                    scoreUI.SetActive(true);
+                    gameUI.SetActive(true);
+                    //timerUI.SetActive(true);
+                    //minimapUI.SetActive(true);
+                    //scoreUI.SetActive(true);
                     first = false;
                 }
 
@@ -135,9 +138,10 @@ public class GameController : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
                     {
                         playerLight.intensity = 1;
-                        timerUI.SetActive(false);
-                        minimapUI.SetActive(false);
-                        scoreUI.SetActive(false);
+                        gameUI.SetActive(false);
+                        //timerUI.SetActive(false);
+                        //minimapUI.SetActive(false);
+                        //scoreUI.SetActive(false);
                         dir = (target[0].transform.position - subway.transform.position).normalized;
                         player.GetComponent<Player>().canMove = false;
                         Quaternion rotation = Quaternion.LookRotation(target[0].transform.position - subway.transform.position, Vector3.up);
