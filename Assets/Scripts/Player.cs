@@ -23,6 +23,8 @@ public class Player : LivingEntity
 
     public bool canMove = false;
 
+    public GameObject rapidFireUI;
+
     protected override void Start()
     {
         base.Start();
@@ -103,11 +105,19 @@ public class Player : LivingEntity
         }
         if(col.gameObject.tag == "Weapon_PowerUp")
         {
+            rapidFireUI.SetActive(true);
             gunController.equippedGun.msBetweenShots = 110;
             Destroy(col.gameObject);
+            StartCoroutine(waitForRapidFire());
+            
         }
     }
 
+    IEnumerator waitForRapidFire()
+    {
+        yield return new WaitForSeconds(2f);
+        rapidFireUI.SetActive(false);
+    }
 
     void updateAnimation()
     {
