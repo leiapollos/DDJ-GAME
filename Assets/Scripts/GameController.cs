@@ -65,6 +65,9 @@ public class GameController : MonoBehaviour
     {
         playerLight.intensity = 1;
         score = 0;
+        if (SceneManager.GetActiveScene().name == "Level2")
+            score = PlayerPrefs.GetInt("player_score");
+        Debug.Log(score);
         GameObject[] hiddingSpotsArray = GameObject.FindGameObjectsWithTag("Hidding Spot");
         for(int i = 0; i < hiddingSpotsArray.Length; i++)
         {
@@ -340,6 +343,7 @@ public class GameController : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name.Equals("Level1"))
         {
+            PlayerPrefs.SetInt("player_score", score);
             StartCoroutine(LoadAsynchronously("Level2"));
         }
         else if (SceneManager.GetActiveScene().name.Equals("Level2"))
